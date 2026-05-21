@@ -1,0 +1,38 @@
+.msg { font-size: 14px; color: var(--color-text-light); padding: 16px 0; line-height: 1.6; }
+
+.list { display: flex; flex-direction: column; gap: 12px; }
+
+.card {
+  background: var(--color-bg);
+  border-radius: var(--radius-md);
+  padding: 14px;
+}
+
+.cardHeader { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+.author { font-size: 14px; font-weight: 700; }
+.disability {
+  margin-left: 6px;
+  font-size: 11px;
+  background: var(--color-tag-bg);
+  color: var(--color-primary);
+  padding: 2px 7px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+.ratingDate { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+.star { font-size: 13px; color: #F57F17; letter-spacing: 1px; }
+.date { font-size: 11px; color: var(--color-text-light); }
+
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+.tag {
+  font-size: 12px;
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  padding: 3px 10px;
+}
+
+.content { font-size: 14px; line-height: 1.6; color: var(--color-text); margin-bottom: 8px; }
+
+.photos { display: flex; gap: 8px; }
+.photo { width: 72px; height: 72px; object-fit: cover; border-radius: var(--radius-sm); }

@@ -1,0 +1,64 @@
+{
+  "centers": [
+    {
+      "id": "busan_main",
+      "name": "부산특수교육지원센터",
+      "district": "부산진구",
+      "address": "부산광역시 부산진구 신천대로263번길 44",
+      "phone": "051-605-3721",
+      "website": "https://www.pen.go.kr",
+      "latitude": 35.1631,
+      "longitude": 129.0536
+    },
+    {
+      "id": "nambu",
+      "name": "남부특수교육지원센터",
+      "district": "남구",
+      "address": "부산광역시 남구 못골로 29",
+      "phone": "051-640-0248",
+      "website": "https://nambu.pen.go.kr",
+      "latitude": 35.1356,
+      "longitude": 129.0876
+    },
+    {
+      "id": "dongnae",
+      "name": "동래특수교육지원센터",
+      "district": "동래구",
+      "address": "부산광역시 동래구 충렬사로67번길 56",
+      "phone": "051-935-4289",
+      "website": "https://dongnae.pen.go.kr",
+      "latitude": 35.2009,
+      "longitude": 129.0836
+    },
+    {
+      "id": "bukbu",
+      "name": "북부특수교육지원센터",
+      "district": "북구",
+      "address": "부산광역시 북구 백양대로1016번다길 44",
+      "phone": "051-330-1266",
+      "website": "https://bukbu.pen.go.kr",
+      "latitude": 35.2371,
+      "longitude": 128.9987
+    },
+    {
+      "id": "seobu",
+      "name": "서부특수교육지원센터",
+      "district": "서구",
+      "address": "부산광역시 서구 꽃마을로 33",
+      "phone": "051-250-0428",
+      "website": "https://seobu.pen.go.kr",
+      "latitude": 35.0979,
+      "longitude": 129.0226
+    },
+    {
+      "id": "haeundae",
+      "name": "해운대특수교육지원센터",
+      "district": "해운대구",
+      "address": "부산광역시 해운대구 세실로 137",
+      "phone": "051-709-0476",
+      "website": "https://haeundae.pen.go.kr",
+      "latitude": 35.1631,
+      "longitude": 129.1639
+    }
+  ]
+}

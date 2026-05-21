@@ -1,0 +1,28 @@
+{
+  "playground": {
+    "id": "busan_yeonje_hyundai_001",
+    "name": "현대아파트 어린이놀이터",
+    "address": "부산광역시 연제구 연산동 984-1",
+    "latitude": 35.1837045,
+    "longitude": 129.0946062,
+    "type": "실외",
+    "public_private": "민간",
+    "fee": "무료",
+    "has_parking": true,
+    "near_hospital": true,
+    "near_police": false,
+    "near_toilet": true
+  },
+  "tag_summary": {
+    "휠체어편리": 4,
+    "조용함": 11,
+    "촉감놀이기구": 3,
+    "쉴공간있음": 9,
+    "청결함": 7,
+    "안전한울타리": 8,
+    "물놀이가능": 2,
+    "바닥안전": 6
+  },
+  "average_rating": 4.2,
+  "total_reviews": 14
+}

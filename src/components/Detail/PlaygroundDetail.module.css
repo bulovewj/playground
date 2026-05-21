@@ -1,0 +1,220 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+}
+
+.sheet {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  background: #fff;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  box-shadow: var(--shadow-md);
+  z-index: 35;
+  display: flex;
+  flex-direction: column;
+  max-height: 75vh;
+  animation: slideUp 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+}
+@keyframes slideUp {
+  from { transform: translateX(-50%) translateY(100%); }
+  to   { transform: translateX(-50%) translateY(0); }
+}
+
+.handle {
+  width: 36px;
+  height: 4px;
+  background: var(--color-border);
+  border-radius: 2px;
+  margin: 12px auto 0;
+  flex-shrink: 0;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 12px 20px 8px;
+  flex-shrink: 0;
+}
+.headerText { flex: 1; min-width: 0; }
+
+.tabRow {
+  display: flex;
+  border-bottom: 1px solid var(--color-border);
+  flex-shrink: 0;
+  margin: 0 20px;
+}
+.tab {
+  flex: 1;
+  padding: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-light);
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  min-height: 44px;
+}
+.tabActive {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+}
+.name {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+.addressRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.address {
+  font-size: 13px;
+  color: var(--color-text-light);
+}
+.dirBtn {
+  font-size: 12px;
+  color: var(--color-secondary);
+  font-weight: 600;
+  white-space: nowrap;
+}
+.closeBtn {
+  font-size: 18px;
+  color: var(--color-text-light);
+  min-height: 44px;
+  min-width: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 8px;
+}
+
+.body {
+  overflow-y: auto;
+  padding: 0 20px 12px;
+  flex: 1;
+}
+
+.chipRow {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.chip {
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1.5px solid var(--color-border);
+  font-size: 13px;
+  background: var(--color-tag-bg);
+}
+
+.infoGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.infoItem {
+  background: var(--color-bg);
+  border-radius: var(--radius-sm);
+  padding: 10px 8px;
+  text-align: center;
+}
+.infoLabel {
+  display: block;
+  font-size: 11px;
+  color: var(--color-text-light);
+  margin-bottom: 4px;
+}
+.infoValue {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.facilityRow {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.facilityBadge {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 4px;
+  border-radius: var(--radius-sm);
+  font-size: 11px;
+  font-weight: 600;
+}
+.facilityActive {
+  background: var(--color-tag-bg);
+  color: var(--color-primary);
+}
+.facilityInactive {
+  background: var(--color-bg);
+  color: var(--color-border);
+}
+
+.strengthSection { margin-bottom: 16px; }
+.sectionLabel {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-text-light);
+  margin-bottom: 12px;
+}
+.reviewCount { font-weight: 400; }
+
+.tagRow {
+  display: flex;
+  gap: 16px;
+}
+.tagItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.tagIcon { font-size: 28px; }
+.tagLabel { font-size: 11px; font-weight: 600; }
+.tagCount {
+  font-size: 11px;
+  color: var(--color-text-light);
+}
+
+.emptyReview {
+  font-size: 13px;
+  color: var(--color-text-light);
+  line-height: 1.5;
+}
+
+.ratingRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+.star { color: #F57F17; font-size: 18px; }
+.ratingValue { font-size: 16px; font-weight: 700; }
+.avgRating { font-weight: 600; color: #F57F17; }
+
+.footer {
+  padding: 12px 20px;
+  padding-bottom: max(12px, env(safe-area-inset-bottom));
+  flex-shrink: 0;
+}
+.reviewBtn {
+  width: 100%;
+  background: var(--color-primary);
+  color: #fff;
+  border-radius: var(--radius-md);
+  font-size: 16px;
+  font-weight: 700;
+  height: 52px;
+}
