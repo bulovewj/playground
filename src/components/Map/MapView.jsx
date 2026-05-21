@@ -10,7 +10,7 @@ const HIGHLIGHT_MARKER = {
   size: { w: 24, h: 35 },
 };
 
-export default function MapView({ playgrounds, filters, onSelectPlayground, highlightId, focusTarget }) {
+export default function MapView({ playgrounds, filters, onSelectPlayground, highlightId, focusTarget, isActive }) {
   const containerRef = useRef(null);
   const mapRef = useRef(null);
   const clustererRef = useRef(null);
@@ -77,6 +77,13 @@ export default function MapView({ playgrounds, filters, onSelectPlayground, high
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playgrounds, filters]);
+
+  // 탭 활성화 시 지도 크기 재계산 (display:none → flex 전환 후 필요)
+  useEffect(() => {
+    if (isActive && mapRef.current) {
+      mapRef.current.relayout();
+    }
+  }, [isActive]);
 
   // 센터 포커스 이동
   useEffect(() => {

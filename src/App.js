@@ -76,6 +76,7 @@ export default function App() {
             onSelectPlayground={setSelectedPg}
             highlightId={DUMMY_ID}
             focusTarget={mapFocusRef.current}
+            isActive={activeTab === 'map'}
           />
           <button
             className={styles.filterBtn}
