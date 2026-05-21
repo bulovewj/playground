@@ -18,9 +18,8 @@ export default function MapView({ playgrounds, filters, onSelectPlayground, high
   const infoWindowRef = useRef(null);
   const showCentersRef = useRef(true);
 
-  // 지도 초기화 (한 번만)
-  useEffect(() => {
-    if (!window.kakao?.maps || mapRef.current) return;
+  const initMap = useCallback(() => {
+    if (mapRef.current || !containerRef.current) return;
 
     const map = new window.kakao.maps.Map(containerRef.current, {
       center: new window.kakao.maps.LatLng(BUSAN_CENTER.lat, BUSAN_CENTER.lng),
@@ -29,7 +28,6 @@ export default function MapView({ playgrounds, filters, onSelectPlayground, high
     mapRef.current = map;
     infoWindowRef.current = new window.kakao.maps.InfoWindow({ zIndex: 1 });
 
-    // 마커 클러스터러 초기화
     if (window.kakao.maps.MarkerClusterer) {
       clustererRef.current = new window.kakao.maps.MarkerClusterer({
         map,
@@ -50,14 +48,19 @@ export default function MapView({ playgrounds, filters, onSelectPlayground, high
     }
 
     addCenterMarkers(map);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // 지도 초기화 — kakao.maps.load() 콜백으로 SDK 준비 후 실행
+  useEffect(() => {
+    if (!window.kakao?.maps) return;
+    window.kakao.maps.load(initMap);
 
     const centerMarkers = centerMarkersRef.current;
     return () => {
       clustererRef.current?.clear();
       centerMarkers.forEach((m) => m.setMap(null));
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [initMap]);
 
   // 놀이터 마커 갱신
   useEffect(() => {
@@ -72,18 +75,20 @@ export default function MapView({ playgrounds, filters, onSelectPlayground, high
     if (clustererRef.current) {
       clustererRef.current.addMarkers(markers);
     } else {
-      // MarkerClusterer 미지원 시 직접 표시
       markers.forEach((m) => m.setMap(map));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playgrounds, filters]);
 
-  // 탭 활성화 시 지도 크기 재계산 (display:none → flex 전환 후 필요)
+  // 탭 활성화 시 초기화 재시도 또는 relayout
   useEffect(() => {
-    if (isActive && mapRef.current) {
+    if (!isActive) return;
+    if (!mapRef.current && window.kakao?.maps) {
+      window.kakao.maps.load(initMap);
+    } else if (mapRef.current) {
       mapRef.current.relayout();
     }
-  }, [isActive]);
+  }, [isActive, initMap]);
 
   // 센터 포커스 이동
   useEffect(() => {
