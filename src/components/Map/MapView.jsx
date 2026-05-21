@@ -10,6 +10,62 @@ const HIGHLIGHT_MARKER = {
   size: { w: 24, h: 35 },
 };
 
+const TAG_LIST = ['휠체어편리', '조용함', '촉감놀이기구', '쉴공간있음', '청결함', '안전한울타리', '물놀이가능', '바닥안전'];
+const TAG_EMOJI = { '휠체어편리': '♿', '조용함': '🌿', '촉감놀이기구': '🖐', '쉴공간있음': '☀️', '청결함': '🧹', '안전한울타리': '🔒', '물놀이가능': '🌊', '바닥안전': '🐾' };
+const TAG_COLOR = { '휠체어편리': '#1565C0', '조용함': '#388E3C', '촉감놀이기구': '#E64A19', '쉴공간있음': '#F9A825', '청결함': '#00897B', '안전한울타리': '#7B1FA2', '물놀이가능': '#0288D1', '바닥안전': '#558B2F' };
+
+const markerCache = {};
+
+function buildMarkerDataUrl(tag) {
+  if (markerCache[tag]) return markerCache[tag];
+  const W = 32, H = 44, R = 13;
+  const canvas = document.createElement('canvas');
+  canvas.width = W; canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  const color = TAG_COLOR[tag] || '#2E7D32';
+
+  // 핀 모양 (원 + 삼각형)
+  ctx.shadowColor = 'rgba(0,0,0,0.3)';
+  ctx.shadowBlur = 4;
+  ctx.shadowOffsetY = 2;
+  ctx.beginPath();
+  ctx.arc(W / 2, R + 1, R, 0, Math.PI * 2);
+  ctx.fillStyle = color;
+  ctx.fill();
+  ctx.shadowBlur = 0; ctx.shadowOffsetY = 0;
+
+  ctx.beginPath();
+  ctx.moveTo(W / 2 - 5, R * 2 - 1);
+  ctx.lineTo(W / 2 + 5, R * 2 - 1);
+  ctx.lineTo(W / 2, H - 3);
+  ctx.closePath();
+  ctx.fillStyle = color;
+  ctx.fill();
+
+  // 흰 테두리
+  ctx.beginPath();
+  ctx.arc(W / 2, R + 1, R, 0, Math.PI * 2);
+  ctx.strokeStyle = 'rgba(255,255,255,0.9)';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  // 이모지
+  ctx.font = '13px serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(TAG_EMOJI[tag] || '🏞', W / 2, R + 1);
+
+  markerCache[tag] = canvas.toDataURL();
+  return markerCache[tag];
+}
+
+function getDemoTag(pg) {
+  let h = 0;
+  const s = pg.id || pg.name || '';
+  for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) & 0xffffffff;
+  return TAG_LIST[Math.abs(h) % TAG_LIST.length];
+}
+
 export default function MapView({ playgrounds, filters, onSelectPlayground, highlightId, focusTarget, isActive }) {
   const containerRef = useRef(null);
   const mapRef = useRef(null);
@@ -128,6 +184,13 @@ export default function MapView({ playgrounds, filters, onSelectPlayground, high
       markerOptions.image = new window.kakao.maps.MarkerImage(
         HIGHLIGHT_MARKER.src,
         new window.kakao.maps.Size(HIGHLIGHT_MARKER.size.w, HIGHLIGHT_MARKER.size.h)
+      );
+    } else {
+      const tag = getDemoTag(pg);
+      markerOptions.image = new window.kakao.maps.MarkerImage(
+        buildMarkerDataUrl(tag),
+        new window.kakao.maps.Size(32, 44),
+        { offset: new window.kakao.maps.Point(16, 44) }
       );
     }
 
