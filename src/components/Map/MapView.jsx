@@ -1,9 +1,10 @@
-import { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef, useCallback, useState } from 'react';
 import centersData from '../../data/specialed_centers.json';
 import styles from './MapView.module.css';
 
-const BUSAN_CENTER = { lat: 35.1837, lng: 129.0946 };
-const DEFAULT_ZOOM = 13;
+const DONGRAE_CENTER = { lat: 35.2043, lng: 129.0847 };
+const DEFAULT_ZOOM = 9;
+const DISTRICT_VIEW_LEVEL = 8; // 이 레벨 이상이면 구별 클러스터 표시
 
 const HIGHLIGHT_MARKER = {
   src: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png',
@@ -24,14 +25,11 @@ function buildMarkerDataUrl(tag) {
   const ctx = canvas.getContext('2d');
   const color = TAG_COLOR[tag] || '#2E7D32';
 
-  // 핀 모양 (원 + 삼각형)
   ctx.shadowColor = 'rgba(0,0,0,0.3)';
-  ctx.shadowBlur = 4;
-  ctx.shadowOffsetY = 2;
+  ctx.shadowBlur = 4; ctx.shadowOffsetY = 2;
   ctx.beginPath();
   ctx.arc(W / 2, R + 1, R, 0, Math.PI * 2);
-  ctx.fillStyle = color;
-  ctx.fill();
+  ctx.fillStyle = color; ctx.fill();
   ctx.shadowBlur = 0; ctx.shadowOffsetY = 0;
 
   ctx.beginPath();
@@ -39,20 +37,14 @@ function buildMarkerDataUrl(tag) {
   ctx.lineTo(W / 2 + 5, R * 2 - 1);
   ctx.lineTo(W / 2, H - 3);
   ctx.closePath();
-  ctx.fillStyle = color;
-  ctx.fill();
+  ctx.fillStyle = color; ctx.fill();
 
-  // 흰 테두리
   ctx.beginPath();
   ctx.arc(W / 2, R + 1, R, 0, Math.PI * 2);
-  ctx.strokeStyle = 'rgba(255,255,255,0.9)';
-  ctx.lineWidth = 2;
-  ctx.stroke();
+  ctx.strokeStyle = 'rgba(255,255,255,0.9)'; ctx.lineWidth = 2; ctx.stroke();
 
-  // 이모지
   ctx.font = '13px serif';
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
   ctx.fillText(TAG_EMOJI[tag] || '🏞', W / 2, R + 1);
 
   markerCache[tag] = canvas.toDataURL();
@@ -91,14 +83,17 @@ export default function MapView({ playgrounds, filters, onSelectPlayground, high
   const clustererRef = useRef(null);
   const centerMarkersRef = useRef([]);
   const districtOverlaysRef = useRef([]);
+  const allMarkersRef = useRef([]);
+  const zoomHandlerRef = useRef(null);
   const infoWindowRef = useRef(null);
   const showCentersRef = useRef(true);
+  const [mapReady, setMapReady] = useState(false);
 
   const initMap = useCallback(() => {
     if (mapRef.current || !containerRef.current) return;
 
     const map = new window.kakao.maps.Map(containerRef.current, {
-      center: new window.kakao.maps.LatLng(BUSAN_CENTER.lat, BUSAN_CENTER.lng),
+      center: new window.kakao.maps.LatLng(DONGRAE_CENTER.lat, DONGRAE_CENTER.lng),
       level: DEFAULT_ZOOM,
     });
     mapRef.current = map;
@@ -124,29 +119,11 @@ export default function MapView({ playgrounds, filters, onSelectPlayground, high
       });
     }
 
-    // 구 이름 오버레이
-    const overlays = DISTRICT_CENTERS.map(({ name, lat, lng }) => {
-      const content = `<div style="background:rgba(255,255,255,0.88);border:1px solid rgba(0,0,0,0.12);border-radius:6px;padding:4px 10px;font-size:13px;font-weight:700;color:#222;white-space:nowrap;pointer-events:none;box-shadow:0 1px 4px rgba(0,0,0,0.18)">${name}</div>`;
-      return new window.kakao.maps.CustomOverlay({
-        position: new window.kakao.maps.LatLng(lat, lng),
-        content,
-        yAnchor: 0.5,
-        zIndex: 3,
-      });
-    });
-    districtOverlaysRef.current = overlays;
-
-    function updateDistrictLabels() {
-      const level = map.getLevel();
-      overlays.forEach(o => o.setMap(level >= 8 ? map : null));
-    }
-    updateDistrictLabels();
-    window.kakao.maps.event.addListener(map, 'zoom_changed', updateDistrictLabels);
-
     addCenterMarkers(map);
+    setMapReady(true);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // 지도 초기화 — kakao.maps.load() 콜백으로 SDK 준비 후 실행
+  // 지도 초기화
   useEffect(() => {
     if (!window.kakao?.maps) return;
     window.kakao.maps.load(initMap);
@@ -158,21 +135,90 @@ export default function MapView({ playgrounds, filters, onSelectPlayground, high
     };
   }, [initMap]);
 
+  // 구별 클러스터 오버레이 — 지도+놀이터 데이터 준비 후 생성
+  useEffect(() => {
+    if (!mapReady || !playgrounds?.length) return;
+    const map = mapRef.current;
+
+    // 구별 놀이터 수 집계
+    const counts = {};
+    playgrounds.forEach((pg) => {
+      if (pg.district) counts[pg.district] = (counts[pg.district] || 0) + 1;
+    });
+
+    // 기존 오버레이 제거
+    districtOverlaysRef.current.forEach((o) => o.setMap(null));
+
+    // 구 클릭 → 해당 구로 줌인
+    window._zoomToDistrict = (lat, lng) => {
+      if (!mapRef.current) return;
+      mapRef.current.setCenter(new window.kakao.maps.LatLng(lat, lng));
+      mapRef.current.setLevel(DISTRICT_VIEW_LEVEL - 1);
+    };
+
+    // 구별 버블 오버레이 생성
+    const overlays = DISTRICT_CENTERS.map(({ name, lat, lng }) => {
+      const count = counts[name] || 0;
+      const content = `<div onclick="window._zoomToDistrict(${lat},${lng})" style="width:56px;height:56px;background:rgba(46,125,50,0.92);border-radius:50%;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;border:2.5px solid rgba(255,255,255,0.85);box-shadow:0 2px 8px rgba(0,0,0,0.25);cursor:pointer;gap:1px"><span style="font-size:16px;font-weight:700;line-height:1">${count}</span><span style="font-size:9px;font-weight:600;opacity:0.92;line-height:1.2">${name}</span></div>`;
+      return new window.kakao.maps.CustomOverlay({
+        position: new window.kakao.maps.LatLng(lat, lng),
+        content,
+        yAnchor: 0.5,
+        zIndex: 5,
+      });
+    });
+    districtOverlaysRef.current = overlays;
+
+    // 줌 레벨에 따라 뷰 전환
+    function applyView() {
+      const level = map.getLevel();
+      if (level >= DISTRICT_VIEW_LEVEL) {
+        // 구별 뷰: 마커 숨김, 구 버블 표시
+        clustererRef.current?.clear();
+        overlays.forEach((o) => o.setMap(map));
+      } else {
+        // 상세 뷰: 구 버블 숨김, 마커 표시
+        overlays.forEach((o) => o.setMap(null));
+        if (allMarkersRef.current.length) {
+          clustererRef.current?.addMarkers(allMarkersRef.current);
+        }
+      }
+    }
+
+    // 기존 줌 리스너 제거 후 재등록
+    if (zoomHandlerRef.current) {
+      window.kakao.maps.event.removeListener(map, 'zoom_changed', zoomHandlerRef.current);
+    }
+    zoomHandlerRef.current = applyView;
+    window.kakao.maps.event.addListener(map, 'zoom_changed', applyView);
+    applyView();
+
+    return () => {
+      window.kakao.maps.event.removeListener(map, 'zoom_changed', applyView);
+      overlays.forEach((o) => o.setMap(null));
+    };
+  }, [mapReady, playgrounds]); // eslint-disable-line react-hooks/exhaustive-deps
+
   // 놀이터 마커 갱신
   useEffect(() => {
     const map = mapRef.current;
     if (!map || !playgrounds?.length) return;
 
-    clustererRef.current?.clear();
-
     const filtered = applyFilters(playgrounds, filters);
     const markers = filtered.map((pg) => createPlaygroundMarker(map, pg));
+    allMarkersRef.current = markers;
 
-    if (clustererRef.current) {
-      clustererRef.current.addMarkers(markers);
-    } else {
-      markers.forEach((m) => m.setMap(map));
+    // 현재 줌 레벨에 따라 마커 또는 구 뷰 적용
+    const level = map.getLevel();
+    if (level < DISTRICT_VIEW_LEVEL) {
+      clustererRef.current?.clear();
+      if (clustererRef.current) {
+        clustererRef.current.addMarkers(markers);
+      } else {
+        markers.forEach((m) => m.setMap(map));
+      }
     }
+    // 구별 뷰 상태면 clusterer는 비워둠 (zoom handler가 관리)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playgrounds, filters]);
 
