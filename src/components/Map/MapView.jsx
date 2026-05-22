@@ -295,7 +295,7 @@ export default function MapView({ playgrounds, filters, onSelectPlayground, high
         🏫 지원센터
       </button>
       <button className={styles.locationBtn} onClick={moveToCurrentLocation}>
-        📍
+        📍 내 위치
       </button>
     </div>
   );

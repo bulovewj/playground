@@ -102,7 +102,10 @@ export default function PlaygroundDetail({ playground, onClose, onWriteReview })
               </div>
             </>
           ) : (
-            <ReviewList reviews={reviews} loading={loading} />
+            <ReviewList
+              reviews={reviews?.length ? reviews : (playground.id === DUMMY_ID ? dummyReviews.reviews : [])}
+              loading={loading}
+            />
           )}
         </div>
 

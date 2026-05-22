@@ -18,7 +18,9 @@ export default function ReviewList({ reviews, loading }) {
 function ReviewCard({ review }) {
   const dateStr = review.createdAt?.toDate
     ? review.createdAt.toDate().toLocaleDateString('ko-KR')
-    : '';
+    : review.createdAt
+      ? new Date(review.createdAt).toLocaleDateString('ko-KR')
+      : '';
 
   return (
     <div className={styles.card}>

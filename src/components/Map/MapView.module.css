@@ -35,12 +35,13 @@
   background: #fff;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
-  width: 44px;
-  height: 44px;
-  font-size: 20px;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 600;
   box-shadow: var(--shadow-sm);
   z-index: 10;
+  min-height: 44px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 4px;
 }
