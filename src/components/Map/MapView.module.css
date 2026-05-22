@@ -27,3 +27,20 @@
   z-index: 10;
   min-height: 44px;
 }
+
+.locationBtn {
+  position: absolute;
+  top: 64px;
+  right: 12px;
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  width: 44px;
+  height: 44px;
+  font-size: 20px;
+  box-shadow: var(--shadow-sm);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

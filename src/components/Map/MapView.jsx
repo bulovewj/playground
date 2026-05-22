@@ -66,11 +66,31 @@ function getDemoTag(pg) {
   return TAG_LIST[Math.abs(h) % TAG_LIST.length];
 }
 
+const DISTRICT_CENTERS = [
+  { name: '중구',    lat: 35.1042, lng: 129.0327 },
+  { name: '서구',    lat: 35.0985, lng: 129.0194 },
+  { name: '동구',    lat: 35.1305, lng: 129.0435 },
+  { name: '영도구',  lat: 35.0913, lng: 129.0680 },
+  { name: '부산진구', lat: 35.1598, lng: 129.0530 },
+  { name: '동래구',  lat: 35.2043, lng: 129.0847 },
+  { name: '남구',    lat: 35.1364, lng: 129.0846 },
+  { name: '북구',    lat: 35.1974, lng: 128.9898 },
+  { name: '해운대구', lat: 35.1631, lng: 129.1639 },
+  { name: '사하구',  lat: 35.0996, lng: 128.9741 },
+  { name: '금정구',  lat: 35.2429, lng: 129.0926 },
+  { name: '강서구',  lat: 35.2122, lng: 128.9817 },
+  { name: '연제구',  lat: 35.1762, lng: 129.0806 },
+  { name: '수영구',  lat: 35.1456, lng: 129.1135 },
+  { name: '사상구',  lat: 35.1528, lng: 128.9919 },
+  { name: '기장군',  lat: 35.2447, lng: 129.2220 },
+];
+
 export default function MapView({ playgrounds, filters, onSelectPlayground, highlightId, focusTarget, isActive }) {
   const containerRef = useRef(null);
   const mapRef = useRef(null);
   const clustererRef = useRef(null);
   const centerMarkersRef = useRef([]);
+  const districtOverlaysRef = useRef([]);
   const infoWindowRef = useRef(null);
   const showCentersRef = useRef(true);
 
@@ -88,20 +108,40 @@ export default function MapView({ playgrounds, filters, onSelectPlayground, high
       clustererRef.current = new window.kakao.maps.MarkerClusterer({
         map,
         averageCenter: true,
-        minLevel: 10,
+        minLevel: 5,
         disableClickZoom: false,
         styles: [{
-          width: '40px', height: '40px',
-          background: 'rgba(46,125,50,0.85)',
+          width: '44px', height: '44px',
+          background: 'rgba(46,125,50,0.9)',
           borderRadius: '50%',
           color: '#fff',
           textAlign: 'center',
-          lineHeight: '40px',
-          fontSize: '14px',
+          lineHeight: '44px',
+          fontSize: '15px',
           fontWeight: '700',
+          border: '2px solid rgba(255,255,255,0.8)',
         }],
       });
     }
+
+    // 구 이름 오버레이
+    const overlays = DISTRICT_CENTERS.map(({ name, lat, lng }) => {
+      const content = `<div style="background:rgba(255,255,255,0.88);border:1px solid rgba(0,0,0,0.12);border-radius:6px;padding:4px 10px;font-size:13px;font-weight:700;color:#222;white-space:nowrap;pointer-events:none;box-shadow:0 1px 4px rgba(0,0,0,0.18)">${name}</div>`;
+      return new window.kakao.maps.CustomOverlay({
+        position: new window.kakao.maps.LatLng(lat, lng),
+        content,
+        yAnchor: 0.5,
+        zIndex: 3,
+      });
+    });
+    districtOverlaysRef.current = overlays;
+
+    function updateDistrictLabels() {
+      const level = map.getLevel();
+      overlays.forEach(o => o.setMap(level >= 8 ? map : null));
+    }
+    updateDistrictLabels();
+    window.kakao.maps.event.addListener(map, 'zoom_changed', updateDistrictLabels);
 
     addCenterMarkers(map);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
@@ -236,11 +276,26 @@ export default function MapView({ playgrounds, filters, onSelectPlayground, high
     );
   }, []);
 
+  const moveToCurrentLocation = useCallback(() => {
+    if (!mapRef.current || !navigator.geolocation) return;
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const latlng = new window.kakao.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+        mapRef.current.setCenter(latlng);
+        mapRef.current.setLevel(4);
+      },
+      () => alert('위치 정보를 가져올 수 없어요.')
+    );
+  }, []);
+
   return (
     <div className={styles.wrapper}>
       <div ref={containerRef} className={styles.map} />
       <button className={styles.toggleBtn} onClick={toggleCenters}>
         🏫 지원센터
+      </button>
+      <button className={styles.locationBtn} onClick={moveToCurrentLocation}>
+        📍
       </button>
     </div>
   );
