@@ -1,0 +1,1309 @@
+{
+  "meta": {
+    "total": 100,
+    "description": "더미 후기 데이터. 실제 사용자 후기가 아닙니다.",
+    "assignment_logic": "놀이터 ID를 100으로 나눈 나머지를 시드로 사용하여 3~5개 배정"
+  },
+  "reviews": [
+    {
+      "id": "dummy_001",
+      "author": "행복한엄마",
+      "child_disability": "자폐성장애",
+      "rating": 4,
+      "tags": [
+        "조용함",
+        "안전한울타리"
+      ],
+      "content": "단지 안이라 외부 차량이 없어서 조용해요. 울타리도 잘 돼있어서 안심이에요.",
+      "date": "2026-01-01",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_002",
+      "author": "든든한아빠",
+      "child_disability": "시각장애",
+      "rating": 5,
+      "tags": [
+        "조용함",
+        "안전한울타리"
+      ],
+      "content": "단지 안이라 외부 차량이 없어서 조용해요. 울타리도 잘 돼있어서 안심이에요.",
+      "date": "2026-02-02",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_003",
+      "author": "씩씩한보호자",
+      "child_disability": "자폐성장애",
+      "rating": 4,
+      "tags": [
+        "조용함",
+        "안전한울타리"
+      ],
+      "content": "소음에 예민한 아이인데 여기는 정말 조용해요. 아이가 눈치 안 보고 놀 수 있어서 좋아요.",
+      "date": "2026-03-03",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_004",
+      "author": "따뜻한맘",
+      "child_disability": "지체장애",
+      "rating": 4,
+      "tags": [
+        "조용함",
+        "안전한울타리"
+      ],
+      "content": "소음에 예민한 아이인데 여기는 정말 조용해요. 아이가 눈치 안 보고 놀 수 있어서 좋아요.",
+      "date": "2026-04-04",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_005",
+      "author": "열심히맘",
+      "child_disability": "자폐성장애",
+      "rating": 4,
+      "tags": [
+        "안전한울타리",
+        "쉴공간있음"
+      ],
+      "content": "울타리가 잘 돼있어 아이가 뛰어다녀도 안심돼요. 벤치도 있어서 쉬기 좋았어요.",
+      "date": "2026-05-05",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_006",
+      "author": "사랑가득",
+      "child_disability": "지체장애",
+      "rating": 5,
+      "tags": [
+        "안전한울타리",
+        "쉴공간있음"
+      ],
+      "content": "울타리가 잘 돼있어 아이가 뛰어다녀도 안심돼요. 벤치도 있어서 쉬기 좋았어요.",
+      "date": "2026-01-06",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_007",
+      "author": "소중한우리",
+      "child_disability": "자폐성장애",
+      "rating": 4,
+      "tags": [
+        "조용함",
+        "청결함"
+      ],
+      "content": "외부인 출입이 적어 조용하고 청결해요. 아이가 편하게 놀았어요.",
+      "date": "2026-02-07",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_008",
+      "author": "함께걷는길",
+      "child_disability": "기타",
+      "rating": 5,
+      "tags": [
+        "조용함",
+        "청결함"
+      ],
+      "content": "외부인 출입이 적어 조용하고 청결해요. 아이가 편하게 놀았어요.",
+      "date": "2026-03-08",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_009",
+      "author": "밝은내일",
+      "child_disability": "자폐성장애",
+      "rating": 5,
+      "tags": [
+        "조용함",
+        "안전한울타리"
+      ],
+      "content": "단지 내라 차 소음이 없고 정말 조용해요. 울타리 덕분에 혼자 뛰어도 걱정 없어요.",
+      "date": "2026-04-09",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_010",
+      "author": "희망가득",
+      "child_disability": "지체장애",
+      "rating": 4,
+      "tags": [
+        "조용함",
+        "안전한울타리"
+      ],
+      "content": "단지 내라 차 소음이 없고 정말 조용해요. 울타리 덕분에 혼자 뛰어도 걱정 없어요.",
+      "date": "2026-05-10",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_011",
+      "author": "즐거운육아",
+      "child_disability": "지체장애",
+      "rating": 3,
+      "tags": [
+        "휠체어편리",
+        "바닥안전"
+      ],
+      "content": "입구 턱이 낮고 고무매트 바닥이라 휠체어 이동이 편했어요.",
+      "date": "2026-01-11",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_012",
+      "author": "사랑둥이맘",
+      "child_disability": "지적장애",
+      "rating": 3,
+      "tags": [
+        "휠체어편리",
+        "바닥안전"
+      ],
+      "content": "입구 턱이 낮고 고무매트 바닥이라 휠체어 이동이 편했어요.",
+      "date": "2026-02-12",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_013",
+      "author": "하늘같은마음",
+      "child_disability": "지체장애",
+      "rating": 4,
+      "tags": [
+        "휠체어편리",
+        "바닥안전"
+      ],
+      "content": "경사로가 있어 휠체어로도 무리 없이 들어갈 수 있어요. 바닥도 평탄해서 좋아요.",
+      "date": "2026-03-13",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_014",
+      "author": "든든한지원자",
+      "child_disability": "기타",
+      "rating": 5,
+      "tags": [
+        "휠체어편리",
+        "바닥안전"
+      ],
+      "content": "경사로가 있어 휠체어로도 무리 없이 들어갈 수 있어요. 바닥도 평탄해서 좋아요.",
+      "date": "2026-04-14",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_015",
+      "author": "함께하는여정",
+      "child_disability": "지체장애",
+      "rating": 5,
+      "tags": [
+        "휠체어편리",
+        "쉴공간있음"
+      ],
+      "content": "휠체어 접근이 쉽고 고무매트 바닥이라 이동하기 편했어요. 벤치도 있어서 쉴 수 있었어요.",
+      "date": "2026-05-15",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_016",
+      "author": "소중한시간",
+      "child_disability": "자폐성장애",
+      "rating": 4,
+      "tags": [
+        "휠체어편리",
+        "쉴공간있음"
+      ],
+      "content": "휠체어 접근이 쉽고 고무매트 바닥이라 이동하기 편했어요. 벤치도 있어서 쉴 수 있었어요.",
+      "date": "2026-01-16",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_017",
+      "author": "행복한동행",
+      "child_disability": "지체장애",
+      "rating": 3,
+      "tags": [
+        "휠체어편리",
+        "바닥안전"
+      ],
+      "content": "포장이 잘 돼있어 휠체어 밀기 편했어요. 바닥 상태도 좋아요.",
+      "date": "2026-02-17",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_018",
+      "author": "따뜻한손길",
+      "child_disability": "시각장애",
+      "rating": 5,
+      "tags": [
+        "휠체어편리",
+        "바닥안전"
+      ],
+      "content": "포장이 잘 돼있어 휠체어 밀기 편했어요. 바닥 상태도 좋아요.",
+      "date": "2026-03-18",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_019",
+      "author": "밝은미소맘",
+      "child_disability": "지체장애",
+      "rating": 4,
+      "tags": [
+        "휠체어편리",
+        "바닥안전"
+      ],
+      "content": "턱이 없어 휠체어 접근이 수월해요. 고무매트라 안전하고요.",
+      "date": "2026-04-19",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_020",
+      "author": "희망찬하루",
+      "child_disability": "자폐성장애",
+      "rating": 3,
+      "tags": [
+        "휠체어편리",
+        "바닥안전"
+      ],
+      "content": "턱이 없어 휠체어 접근이 수월해요. 고무매트라 안전하고요.",
+      "date": "2026-05-20",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_021",
+      "author": "행복한엄마",
+      "child_disability": "시각장애",
+      "rating": 4,
+      "tags": [
+        "촉감놀이기구",
+        "쉴공간있음"
+      ],
+      "content": "모래 놀이 공간이 있어서 촉감 자극을 받으며 잘 놀았어요.",
+      "date": "2026-01-21",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_022",
+      "author": "든든한아빠",
+      "child_disability": "기타",
+      "rating": 5,
+      "tags": [
+        "촉감놀이기구",
+        "쉴공간있음"
+      ],
+      "content": "모래 놀이 공간이 있어서 촉감 자극을 받으며 잘 놀았어요.",
+      "date": "2026-02-22",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_023",
+      "author": "씩씩한보호자",
+      "child_disability": "시각장애",
+      "rating": 3,
+      "tags": [
+        "촉감놀이기구",
+        "쉴공간있음"
+      ],
+      "content": "다양한 재질의 기구가 있어 촉감 활동이 가능했어요. 그늘도 있어서 오래 있을 수 있었어요.",
+      "date": "2026-03-23",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_024",
+      "author": "따뜻한맘",
+      "child_disability": "청각장애",
+      "rating": 4,
+      "tags": [
+        "촉감놀이기구",
+        "쉴공간있음"
+      ],
+      "content": "다양한 재질의 기구가 있어 촉감 활동이 가능했어요. 그늘도 있어서 오래 있을 수 있었어요.",
+      "date": "2026-04-24",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_025",
+      "author": "열심히맘",
+      "child_disability": "시각장애",
+      "rating": 5,
+      "tags": [
+        "촉감놀이기구",
+        "청결함"
+      ],
+      "content": "모래놀이 공간이 넓고 청결했어요. 촉감 자극이 필요한 아이한테 좋아요.",
+      "date": "2026-05-25",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_026",
+      "author": "사랑가득",
+      "child_disability": "청각장애",
+      "rating": 5,
+      "tags": [
+        "촉감놀이기구",
+        "청결함"
+      ],
+      "content": "모래놀이 공간이 넓고 청결했어요. 촉감 자극이 필요한 아이한테 좋아요.",
+      "date": "2026-01-26",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_027",
+      "author": "소중한우리",
+      "child_disability": "시각장애",
+      "rating": 4,
+      "tags": [
+        "촉감놀이기구",
+        "조용함"
+      ],
+      "content": "촉감 자극 기구가 있고 조용해서 아이가 집중하며 놀 수 있었어요.",
+      "date": "2026-02-27",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_028",
+      "author": "함께걷는길",
+      "child_disability": "지적장애",
+      "rating": 4,
+      "tags": [
+        "촉감놀이기구",
+        "조용함"
+      ],
+      "content": "촉감 자극 기구가 있고 조용해서 아이가 집중하며 놀 수 있었어요.",
+      "date": "2026-03-28",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_029",
+      "author": "밝은내일",
+      "child_disability": "시각장애",
+      "rating": 5,
+      "tags": [
+        "촉감놀이기구",
+        "청결함"
+      ],
+      "content": "모래 놀이터라 아이가 촉감 체험을 다양하게 할 수 있었어요. 관리도 잘 돼있어요.",
+      "date": "2026-04-01",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_030",
+      "author": "희망가득",
+      "child_disability": "청각장애",
+      "rating": 5,
+      "tags": [
+        "촉감놀이기구",
+        "청결함"
+      ],
+      "content": "모래 놀이터라 아이가 촉감 체험을 다양하게 할 수 있었어요. 관리도 잘 돼있어요.",
+      "date": "2026-05-02",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_031",
+      "author": "즐거운육아",
+      "child_disability": "지적장애",
+      "rating": 5,
+      "tags": [
+        "청결함",
+        "쉴공간있음"
+      ],
+      "content": "관리가 잘 돼있고 쓰레기가 없이 깔끔해요. 그늘 벤치도 여러 개 있어요.",
+      "date": "2026-01-03",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_032",
+      "author": "사랑둥이맘",
+      "child_disability": "청각장애",
+      "rating": 5,
+      "tags": [
+        "청결함",
+        "쉴공간있음"
+      ],
+      "content": "관리가 잘 돼있고 쓰레기가 없이 깔끔해요. 그늘 벤치도 여러 개 있어요.",
+      "date": "2026-02-04",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_033",
+      "author": "하늘같은마음",
+      "child_disability": "지적장애",
+      "rating": 3,
+      "tags": [
+        "청결함",
+        "쉴공간있음"
+      ],
+      "content": "항상 청결하게 유지되는 것 같아요. 보호자가 쉴 벤치도 충분해요.",
+      "date": "2026-03-05",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_034",
+      "author": "든든한지원자",
+      "child_disability": "지체장애",
+      "rating": 5,
+      "tags": [
+        "청결함",
+        "쉴공간있음"
+      ],
+      "content": "항상 청결하게 유지되는 것 같아요. 보호자가 쉴 벤치도 충분해요.",
+      "date": "2026-04-06",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_035",
+      "author": "함께하는여정",
+      "child_disability": "지적장애",
+      "rating": 3,
+      "tags": [
+        "쉴공간있음",
+        "청결함"
+      ],
+      "content": "바닥이 깨끗하고 벤치가 그늘에 있어서 아이 보면서 쉬기 좋았어요.",
+      "date": "2026-05-07",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_036",
+      "author": "소중한시간",
+      "child_disability": "자폐성장애",
+      "rating": 4,
+      "tags": [
+        "쉴공간있음",
+        "청결함"
+      ],
+      "content": "바닥이 깨끗하고 벤치가 그늘에 있어서 아이 보면서 쉬기 좋았어요.",
+      "date": "2026-01-08",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_037",
+      "author": "행복한동행",
+      "child_disability": "지적장애",
+      "rating": 4,
+      "tags": [
+        "청결함",
+        "안전한울타리"
+      ],
+      "content": "청결하고 울타리도 잘 돼있어요. 아이가 뛰어다녀도 걱정이 없어요.",
+      "date": "2026-02-09",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_038",
+      "author": "따뜻한손길",
+      "child_disability": "시각장애",
+      "rating": 5,
+      "tags": [
+        "청결함",
+        "안전한울타리"
+      ],
+      "content": "청결하고 울타리도 잘 돼있어요. 아이가 뛰어다녀도 걱정이 없어요.",
+      "date": "2026-03-10",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_039",
+      "author": "밝은미소맘",
+      "child_disability": "지적장애",
+      "rating": 4,
+      "tags": [
+        "청결함",
+        "쉴공간있음"
+      ],
+      "content": "깨끗하고 바닥 상태도 좋아요. 보호자 쉴 공간도 충분했어요.",
+      "date": "2026-04-11",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_040",
+      "author": "희망찬하루",
+      "child_disability": "기타",
+      "rating": 5,
+      "tags": [
+        "청결함",
+        "쉴공간있음"
+      ],
+      "content": "깨끗하고 바닥 상태도 좋아요. 보호자 쉴 공간도 충분했어요.",
+      "date": "2026-05-12",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_041",
+      "author": "행복한엄마",
+      "child_disability": "자폐성장애",
+      "rating": 4,
+      "tags": [
+        "물놀이가능",
+        "바닥안전"
+      ],
+      "content": "여름엔 물놀이 공간이 열려서 아이가 신나게 놀았어요.",
+      "date": "2026-01-13",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_042",
+      "author": "든든한아빠",
+      "child_disability": "자폐성장애",
+      "rating": 5,
+      "tags": [
+        "물놀이가능",
+        "바닥안전"
+      ],
+      "content": "물놀이 시설이 있고 바닥이 미끄럽지 않아 안전해요.",
+      "date": "2026-02-14",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_043",
+      "author": "씩씩한보호자",
+      "child_disability": "자폐성장애",
+      "rating": 3,
+      "tags": [
+        "물놀이가능",
+        "쉴공간있음"
+      ],
+      "content": "물놀이 공간이 있어서 감각 자극 받기 좋아요. 그늘도 있어서 더위도 피할 수 있었어요.",
+      "date": "2026-03-15",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_044",
+      "author": "따뜻한맘",
+      "child_disability": "자폐성장애",
+      "rating": 3,
+      "tags": [
+        "물놀이가능",
+        "청결함"
+      ],
+      "content": "물놀이 기구가 있고 깔끔하게 관리되고 있어요.",
+      "date": "2026-04-16",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_045",
+      "author": "열심히맘",
+      "child_disability": "자폐성장애",
+      "rating": 5,
+      "tags": [
+        "물놀이가능",
+        "바닥안전"
+      ],
+      "content": "물놀이 가능하고 바닥이 고무매트라 미끄러져도 안전해요.",
+      "date": "2026-05-17",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_046",
+      "author": "사랑가득",
+      "child_disability": "지적장애",
+      "rating": 5,
+      "tags": [
+        "쉴공간있음",
+        "청결함"
+      ],
+      "content": "공원 안에 있어서 넓고 쾌적해요. 벤치도 많고 그늘도 충분해요.",
+      "date": "2026-01-18",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_047",
+      "author": "소중한우리",
+      "child_disability": "지적장애",
+      "rating": 5,
+      "tags": [
+        "쉴공간있음",
+        "조용함"
+      ],
+      "content": "넓은 공원형이라 아이가 뛰어놀기 좋아요. 조용하고 쉴 공간도 많아요.",
+      "date": "2026-02-19",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_048",
+      "author": "함께걷는길",
+      "child_disability": "지적장애",
+      "rating": 5,
+      "tags": [
+        "쉴공간있음",
+        "청결함"
+      ],
+      "content": "그늘이 많고 벤치가 곳곳에 있어서 오래 있을 수 있어요.",
+      "date": "2026-03-20",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_049",
+      "author": "밝은내일",
+      "child_disability": "지적장애",
+      "rating": 5,
+      "tags": [
+        "조용함",
+        "쉴공간있음"
+      ],
+      "content": "조용하고 공기 좋은 공원 안에 있어요. 보호자도 편하게 쉴 수 있어요.",
+      "date": "2026-04-21",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_050",
+      "author": "희망가득",
+      "child_disability": "지적장애",
+      "rating": 4,
+      "tags": [
+        "쉴공간있음",
+        "바닥안전"
+      ],
+      "content": "넓고 깨끗해요. 고무매트 바닥이라 넘어져도 크게 다치지 않아요.",
+      "date": "2026-05-22",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_051",
+      "author": "즐거운육아",
+      "child_disability": "지체장애",
+      "rating": 3,
+      "tags": [
+        "바닥안전",
+        "청결함"
+      ],
+      "content": "고무매트 바닥이라 넘어져도 안심이에요. 청결하게 관리되고 있어요.",
+      "date": "2026-01-23",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_052",
+      "author": "사랑둥이맘",
+      "child_disability": "지체장애",
+      "rating": 5,
+      "tags": [
+        "바닥안전",
+        "휠체어편리"
+      ],
+      "content": "바닥 재질이 부드러워서 아이가 넘어져도 안전해요. 휠체어 이동도 편했어요.",
+      "date": "2026-02-24",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_053",
+      "author": "하늘같은마음",
+      "child_disability": "지체장애",
+      "rating": 4,
+      "tags": [
+        "바닥안전",
+        "휠체어편리"
+      ],
+      "content": "모래 없이 고무매트 바닥이라 휠체어도 잘 다닐 수 있어요.",
+      "date": "2026-03-25",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_054",
+      "author": "든든한지원자",
+      "child_disability": "지체장애",
+      "rating": 5,
+      "tags": [
+        "바닥안전",
+        "안전한울타리"
+      ],
+      "content": "바닥이 안전하고 울타리도 잘 돼있어요. 아이 혼자 뛰어도 걱정 없어요.",
+      "date": "2026-04-26",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_055",
+      "author": "함께하는여정",
+      "child_disability": "지체장애",
+      "rating": 4,
+      "tags": [
+        "바닥안전",
+        "청결함"
+      ],
+      "content": "고무매트 바닥이고 청결해서 아이가 넘어져도 다칠 걱정이 없어요.",
+      "date": "2026-05-27",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_056",
+      "author": "소중한시간",
+      "child_disability": "기타",
+      "rating": 4,
+      "tags": [
+        "안전한울타리",
+        "바닥안전"
+      ],
+      "content": "울타리가 잘 돼있고 바닥도 안전해서 아이 혼자 뛰어도 걱정 없어요.",
+      "date": "2026-01-28",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_057",
+      "author": "행복한동행",
+      "child_disability": "기타",
+      "rating": 5,
+      "tags": [
+        "안전한울타리",
+        "조용함"
+      ],
+      "content": "조용하고 안전한 울타리 덕분에 아이가 편하게 놀 수 있어요.",
+      "date": "2026-02-01",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_058",
+      "author": "따뜻한손길",
+      "child_disability": "기타",
+      "rating": 5,
+      "tags": [
+        "안전한울타리",
+        "쉴공간있음"
+      ],
+      "content": "울타리가 잘 돼있고 벤치도 있어서 보호자가 쉬면서 볼 수 있어요.",
+      "date": "2026-03-02",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_059",
+      "author": "밝은미소맘",
+      "child_disability": "기타",
+      "rating": 5,
+      "tags": [
+        "안전한울타리",
+        "바닥안전"
+      ],
+      "content": "안전한 울타리와 부드러운 바닥으로 아이 안전이 잘 보장돼요.",
+      "date": "2026-04-03",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_060",
+      "author": "희망찬하루",
+      "child_disability": "기타",
+      "rating": 4,
+      "tags": [
+        "안전한울타리",
+        "바닥안전"
+      ],
+      "content": "울타리로 막혀있어서 아이가 멀리 가지 않아요. 바닥도 안전해요.",
+      "date": "2026-05-04",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_061",
+      "author": "행복한엄마",
+      "child_disability": "지적장애",
+      "rating": 5,
+      "tags": [
+        "물놀이가능",
+        "바닥안전"
+      ],
+      "content": "여름엔 물놀이 공간이 열려서 아이가 신나게 놀았어요.",
+      "date": "2026-01-05",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_062",
+      "author": "든든한아빠",
+      "child_disability": "지체장애",
+      "rating": 5,
+      "tags": [
+        "쉴공간있음",
+        "조용함"
+      ],
+      "content": "넓은 공원형이라 아이가 뛰어놀기 좋아요. 조용하고 쉴 공간도 많아요.",
+      "date": "2026-02-06",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_063",
+      "author": "씩씩한보호자",
+      "child_disability": "지적장애",
+      "rating": 4,
+      "tags": [
+        "바닥안전",
+        "휠체어편리"
+      ],
+      "content": "모래 없이 고무매트 바닥이라 휠체어도 잘 다닐 수 있어요.",
+      "date": "2026-03-07",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_064",
+      "author": "따뜻한맘",
+      "child_disability": "자폐성장애",
+      "rating": 3,
+      "tags": [
+        "안전한울타리",
+        "바닥안전"
+      ],
+      "content": "안전한 울타리와 부드러운 바닥으로 아이 안전이 잘 보장돼요.",
+      "date": "2026-04-08",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_065",
+      "author": "열심히맘",
+      "child_disability": "청각장애",
+      "rating": 5,
+      "tags": [
+        "조용함",
+        "안전한울타리"
+      ],
+      "content": "단지 내라 차 소음이 없고 정말 조용해요. 울타리 덕분에 혼자 뛰어도 걱정 없어요.",
+      "date": "2026-05-09",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_066",
+      "author": "사랑가득",
+      "child_disability": "기타",
+      "rating": 5,
+      "tags": [
+        "휠체어편리",
+        "바닥안전"
+      ],
+      "content": "입구 턱이 낮고 고무매트 바닥이라 휠체어 이동이 편했어요.",
+      "date": "2026-01-10",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_067",
+      "author": "소중한우리",
+      "child_disability": "지체장애",
+      "rating": 4,
+      "tags": [
+        "촉감놀이기구",
+        "쉴공간있음"
+      ],
+      "content": "다양한 재질의 기구가 있어 촉감 활동이 가능했어요. 그늘도 있어서 오래 있을 수 있었어요.",
+      "date": "2026-02-11",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_068",
+      "author": "함께걷는길",
+      "child_disability": "기타",
+      "rating": 5,
+      "tags": [
+        "쉴공간있음",
+        "청결함"
+      ],
+      "content": "바닥이 깨끗하고 벤치가 그늘에 있어서 아이 보면서 쉬기 좋았어요.",
+      "date": "2026-03-12",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_069",
+      "author": "밝은내일",
+      "child_disability": "시각장애",
+      "rating": 5,
+      "tags": [
+        "물놀이가능",
+        "청결함"
+      ],
+      "content": "물놀이 기구가 있고 깔끔하게 관리되고 있어요.",
+      "date": "2026-04-13",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_070",
+      "author": "희망가득",
+      "child_disability": "자폐성장애",
+      "rating": 4,
+      "tags": [
+        "쉴공간있음",
+        "바닥안전"
+      ],
+      "content": "넓고 깨끗해요. 고무매트 바닥이라 넘어져도 크게 다치지 않아요.",
+      "date": "2026-05-14",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_071",
+      "author": "즐거운육아",
+      "child_disability": "청각장애",
+      "rating": 5,
+      "tags": [
+        "바닥안전",
+        "청결함"
+      ],
+      "content": "고무매트 바닥이라 넘어져도 안심이에요. 청결하게 관리되고 있어요.",
+      "date": "2026-01-15",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_072",
+      "author": "사랑둥이맘",
+      "child_disability": "기타",
+      "rating": 4,
+      "tags": [
+        "안전한울타리",
+        "조용함"
+      ],
+      "content": "조용하고 안전한 울타리 덕분에 아이가 편하게 놀 수 있어요.",
+      "date": "2026-02-16",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_073",
+      "author": "하늘같은마음",
+      "child_disability": "지체장애",
+      "rating": 3,
+      "tags": [
+        "안전한울타리",
+        "쉴공간있음"
+      ],
+      "content": "울타리가 잘 돼있어 아이가 뛰어다녀도 안심돼요. 벤치도 있어서 쉬기 좋았어요.",
+      "date": "2026-03-17",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_074",
+      "author": "든든한지원자",
+      "child_disability": "자폐성장애",
+      "rating": 4,
+      "tags": [
+        "휠체어편리",
+        "바닥안전"
+      ],
+      "content": "포장이 잘 돼있어 휠체어 밀기 편했어요. 바닥 상태도 좋아요.",
+      "date": "2026-04-18",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_075",
+      "author": "함께하는여정",
+      "child_disability": "기타",
+      "rating": 5,
+      "tags": [
+        "촉감놀이기구",
+        "청결함"
+      ],
+      "content": "모래 놀이터라 아이가 촉감 체험을 다양하게 할 수 있었어요. 관리도 잘 돼있어요.",
+      "date": "2026-05-19",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_076",
+      "author": "소중한시간",
+      "child_disability": "지적장애",
+      "rating": 4,
+      "tags": [
+        "청결함",
+        "쉴공간있음"
+      ],
+      "content": "관리가 잘 돼있고 쓰레기가 없이 깔끔해요. 그늘 벤치도 여러 개 있어요.",
+      "date": "2026-01-20",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_077",
+      "author": "행복한동행",
+      "child_disability": "시각장애",
+      "rating": 4,
+      "tags": [
+        "물놀이가능",
+        "바닥안전"
+      ],
+      "content": "물놀이 시설이 있고 바닥이 미끄럽지 않아 안전해요.",
+      "date": "2026-02-21",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_078",
+      "author": "따뜻한손길",
+      "child_disability": "자폐성장애",
+      "rating": 5,
+      "tags": [
+        "쉴공간있음",
+        "청결함"
+      ],
+      "content": "그늘이 많고 벤치가 곳곳에 있어서 오래 있을 수 있어요.",
+      "date": "2026-03-22",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_079",
+      "author": "밝은미소맘",
+      "child_disability": "기타",
+      "rating": 3,
+      "tags": [
+        "바닥안전",
+        "안전한울타리"
+      ],
+      "content": "바닥이 안전하고 울타리도 잘 돼있어요. 아이 혼자 뛰어도 걱정 없어요.",
+      "date": "2026-04-23",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_080",
+      "author": "희망찬하루",
+      "child_disability": "청각장애",
+      "rating": 5,
+      "tags": [
+        "안전한울타리",
+        "바닥안전"
+      ],
+      "content": "울타리로 막혀있어서 아이가 멀리 가지 않아요. 바닥도 안전해요.",
+      "date": "2026-05-24",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_081",
+      "author": "행복한엄마",
+      "child_disability": "청각장애",
+      "rating": 4,
+      "tags": [
+        "조용함",
+        "안전한울타리"
+      ],
+      "content": "단지 안이라 외부 차량이 없어서 조용해요. 울타리도 잘 돼있어서 안심이에요.",
+      "date": "2026-01-25",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_082",
+      "author": "든든한아빠",
+      "child_disability": "시각장애",
+      "rating": 5,
+      "tags": [
+        "휠체어편리",
+        "바닥안전"
+      ],
+      "content": "경사로가 있어 휠체어로도 무리 없이 들어갈 수 있어요. 바닥도 평탄해서 좋아요.",
+      "date": "2026-02-26",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_083",
+      "author": "씩씩한보호자",
+      "child_disability": "자폐성장애",
+      "rating": 3,
+      "tags": [
+        "촉감놀이기구",
+        "청결함"
+      ],
+      "content": "모래놀이 공간이 넓고 청결했어요. 촉감 자극이 필요한 아이한테 좋아요.",
+      "date": "2026-03-27",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_084",
+      "author": "따뜻한맘",
+      "child_disability": "지적장애",
+      "rating": 5,
+      "tags": [
+        "청결함",
+        "안전한울타리"
+      ],
+      "content": "청결하고 울타리도 잘 돼있어요. 아이가 뛰어다녀도 걱정이 없어요.",
+      "date": "2026-04-28",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_085",
+      "author": "열심히맘",
+      "child_disability": "지적장애",
+      "rating": 5,
+      "tags": [
+        "물놀이가능",
+        "바닥안전"
+      ],
+      "content": "물놀이 가능하고 바닥이 고무매트라 미끄러져도 안전해요.",
+      "date": "2026-05-01",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_086",
+      "author": "사랑가득",
+      "child_disability": "지적장애",
+      "rating": 5,
+      "tags": [
+        "쉴공간있음",
+        "청결함"
+      ],
+      "content": "공원 안에 있어서 넓고 쾌적해요. 벤치도 많고 그늘도 충분해요.",
+      "date": "2026-01-02",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_087",
+      "author": "소중한우리",
+      "child_disability": "지체장애",
+      "rating": 4,
+      "tags": [
+        "바닥안전",
+        "휠체어편리"
+      ],
+      "content": "바닥 재질이 부드러워서 아이가 넘어져도 안전해요. 휠체어 이동도 편했어요.",
+      "date": "2026-02-03",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_088",
+      "author": "함께걷는길",
+      "child_disability": "자폐성장애",
+      "rating": 5,
+      "tags": [
+        "안전한울타리",
+        "쉴공간있음"
+      ],
+      "content": "울타리가 잘 돼있고 벤치도 있어서 보호자가 쉬면서 볼 수 있어요.",
+      "date": "2026-03-04",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_089",
+      "author": "밝은내일",
+      "child_disability": "기타",
+      "rating": 4,
+      "tags": [
+        "조용함",
+        "청결함"
+      ],
+      "content": "외부인 출입이 적어 조용하고 청결해요. 아이가 편하게 놀았어요.",
+      "date": "2026-04-05",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_090",
+      "author": "희망가득",
+      "child_disability": "지체장애",
+      "rating": 4,
+      "tags": [
+        "휠체어편리",
+        "바닥안전"
+      ],
+      "content": "턱이 없어 휠체어 접근이 수월해요. 고무매트라 안전하고요.",
+      "date": "2026-05-06",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_091",
+      "author": "즐거운육아",
+      "child_disability": "기타",
+      "rating": 4,
+      "tags": [
+        "촉감놀이기구",
+        "쉴공간있음"
+      ],
+      "content": "모래 놀이 공간이 있어서 촉감 자극을 받으며 잘 놀았어요.",
+      "date": "2026-01-07",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_092",
+      "author": "사랑둥이맘",
+      "child_disability": "기타",
+      "rating": 5,
+      "tags": [
+        "청결함",
+        "쉴공간있음"
+      ],
+      "content": "항상 청결하게 유지되는 것 같아요. 보호자가 쉴 벤치도 충분해요.",
+      "date": "2026-02-08",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_093",
+      "author": "하늘같은마음",
+      "child_disability": "청각장애",
+      "rating": 4,
+      "tags": [
+        "물놀이가능",
+        "쉴공간있음"
+      ],
+      "content": "물놀이 공간이 있어서 감각 자극 받기 좋아요. 그늘도 있어서 더위도 피할 수 있었어요.",
+      "date": "2026-03-09",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_094",
+      "author": "든든한지원자",
+      "child_disability": "자폐성장애",
+      "rating": 4,
+      "tags": [
+        "조용함",
+        "쉴공간있음"
+      ],
+      "content": "조용하고 공기 좋은 공원 안에 있어요. 보호자도 편하게 쉴 수 있어요.",
+      "date": "2026-04-10",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_095",
+      "author": "함께하는여정",
+      "child_disability": "자폐성장애",
+      "rating": 4,
+      "tags": [
+        "바닥안전",
+        "청결함"
+      ],
+      "content": "고무매트 바닥이고 청결해서 아이가 넘어져도 다칠 걱정이 없어요.",
+      "date": "2026-05-11",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_096",
+      "author": "소중한시간",
+      "child_disability": "지적장애",
+      "rating": 3,
+      "tags": [
+        "안전한울타리",
+        "바닥안전"
+      ],
+      "content": "울타리가 잘 돼있고 바닥도 안전해서 아이 혼자 뛰어도 걱정 없어요.",
+      "date": "2026-01-12",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_097",
+      "author": "행복한동행",
+      "child_disability": "지체장애",
+      "rating": 5,
+      "tags": [
+        "조용함",
+        "안전한울타리"
+      ],
+      "content": "소음에 예민한 아이인데 여기는 정말 조용해요. 아이가 눈치 안 보고 놀 수 있어서 좋아요.",
+      "date": "2026-02-13",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_098",
+      "author": "따뜻한손길",
+      "child_disability": "자폐성장애",
+      "rating": 5,
+      "tags": [
+        "휠체어편리",
+        "쉴공간있음"
+      ],
+      "content": "휠체어 접근이 쉽고 고무매트 바닥이라 이동하기 편했어요. 벤치도 있어서 쉴 수 있었어요.",
+      "date": "2026-03-14",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_099",
+      "author": "밝은미소맘",
+      "child_disability": "기타",
+      "rating": 3,
+      "tags": [
+        "촉감놀이기구",
+        "조용함"
+      ],
+      "content": "촉감 자극 기구가 있고 조용해서 아이가 집중하며 놀 수 있었어요.",
+      "date": "2026-04-15",
+      "is_dummy": true
+    },
+    {
+      "id": "dummy_100",
+      "author": "희망찬하루",
+      "child_disability": "시각장애",
+      "rating": 5,
+      "tags": [
+        "청결함",
+        "쉴공간있음"
+      ],
+      "content": "깨끗하고 바닥 상태도 좋아요. 보호자 쉴 공간도 충분했어요.",
+      "date": "2026-05-16",
+      "is_dummy": true
+    }
+  ]
+}

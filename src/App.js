@@ -3,26 +3,28 @@ import './styles/global.css';
 import BottomNav from './components/common/BottomNav';
 import HomeFeed from './components/Home/HomeFeed';
 import MapView from './components/Map/MapView';
+import PlaygroundPreview from './components/Map/PlaygroundPreview';
 import FilterSidebar from './components/Filter/FilterSidebar';
 import PlaygroundDetail from './components/Detail/PlaygroundDetail';
 import ReviewForm from './components/Review/ReviewForm';
 import SpecialEdTab from './components/SpecialEd/SpecialEdTab';
 import AIChat from './components/Chat/AIChat';
 import { useReviews } from './hooks/useReviews';
+import { EMPTY_FILTERS } from './utils/tagUtils';
 import styles from './App.module.css';
 
 const DUMMY_ID = 'busan_yeonje_hyundai_001';
-const EMPTY_FILTERS = { types: [], ownership: [], tags: [], facilities: [], districts: [] };
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('home');
   const [playgrounds, setPlaygrounds] = useState([]);
   const [filters, setFilters] = useState(EMPTY_FILTERS);
+  const [previewPg, setPreviewPg] = useState(null);
   const [selectedPg, setSelectedPg] = useState(null);
   const [filterOpen, setFilterOpen] = useState(false);
   const [reviewTarget, setReviewTarget] = useState(null);
   const [submitting, setSubmitting] = useState(false);
-  const mapFocusRef = useRef(null); // 지도 포커스 요청 (센터 위치)
+  const mapFocusRef = useRef(null);
 
   const { submitReview } = useReviews(reviewTarget?.id);
 
@@ -36,11 +38,18 @@ export default function App() {
 
   function handleQuickFilter(tag) {
     setFilters({ ...EMPTY_FILTERS, tags: [tag] });
+    setActiveTab('map');
   }
 
   function handleCenterOnMap(center) {
     mapFocusRef.current = center;
     setActiveTab('map');
+  }
+
+  function handleGoToPlayground(pg) {
+    mapFocusRef.current = pg;
+    setActiveTab('map');
+    setPreviewPg(pg);
   }
 
   async function handleSubmitReview(formData, photos) {
@@ -63,8 +72,11 @@ export default function App() {
         {/* 홈 */}
         <div className={`${styles.screen} ${activeTab === 'home' ? styles.screenActive : ''}`}>
           <HomeFeed
+            playgrounds={playgrounds}
             onQuickFilter={handleQuickFilter}
             onGoMap={() => setActiveTab('map')}
+            onGoToPlayground={handleGoToPlayground}
+            onSelectPlayground={handleGoToPlayground}
           />
         </div>
 
@@ -73,13 +85,14 @@ export default function App() {
           <MapView
             playgrounds={playgrounds}
             filters={filters}
-            onSelectPlayground={setSelectedPg}
+            onSelectPlayground={(pg) => { setPreviewPg(pg); }}
             highlightId={DUMMY_ID}
             focusTarget={mapFocusRef.current}
             isActive={activeTab === 'map'}
           />
           <button
             className={styles.filterBtn}
+            style={previewPg ? { bottom: 210 } : undefined}
             onClick={() => setFilterOpen(true)}
           >
             🔍 필터
@@ -87,6 +100,16 @@ export default function App() {
               <span className={styles.badge}>{activeFilterCount}</span>
             )}
           </button>
+          {previewPg && (
+            <PlaygroundPreview
+              playground={previewPg}
+              onClose={() => setPreviewPg(null)}
+              onDetail={() => {
+                setSelectedPg(previewPg);
+                setPreviewPg(null);
+              }}
+            />
+          )}
         </div>
 
         {/* AI 채팅 */}
@@ -101,7 +124,7 @@ export default function App() {
       </div>
 
       {/* 하단 네비게이션 */}
-      <BottomNav activeTab={activeTab} onChangeTab={setActiveTab} />
+      <BottomNav activeTab={activeTab} onChangeTab={(tab) => { setPreviewPg(null); setActiveTab(tab); }} />
 
       {/* 오버레이: 필터 */}
       <FilterSidebar

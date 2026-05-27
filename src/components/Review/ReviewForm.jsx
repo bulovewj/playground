@@ -1,10 +1,11 @@
-import { useState, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { TAGS, DISABILITY_TYPES } from '../../utils/tagUtils';
 import styles from './ReviewForm.module.css';
 
 const MAX_TAGS = 3;
 const MAX_PHOTOS = 3;
 const MAX_CONTENT = 200;
+const MAX_PHOTO_SIZE = 5 * 1024 * 1024;
 
 export default function ReviewForm({ playground, onSubmit, onClose, submitting }) {
   const [author, setAuthor] = useState('');
@@ -17,6 +18,18 @@ export default function ReviewForm({ playground, onSubmit, onClose, submitting }
   const [error, setError] = useState('');
   const fileRef = useRef(null);
 
+  useEffect(() => {
+    return () => {
+      photoPreview.forEach((url) => URL.revokeObjectURL(url));
+    };
+  }, [photoPreview]);
+
+  function updatePhotos(nextFiles) {
+    photoPreview.forEach((url) => URL.revokeObjectURL(url));
+    setPhotos(nextFiles);
+    setPhotoPreview(nextFiles.map((f) => URL.createObjectURL(f)));
+  }
+
   function toggleTag(id) {
     setSelectedTags((prev) =>
       prev.includes(id)
@@ -28,16 +41,19 @@ export default function ReviewForm({ playground, onSubmit, onClose, submitting }
   }
 
   function handlePhotos(e) {
-    const files = Array.from(e.target.files).slice(0, MAX_PHOTOS - photos.length);
-    const newFiles = [...photos, ...files].slice(0, MAX_PHOTOS);
-    setPhotos(newFiles);
-    setPhotoPreview(newFiles.map((f) => URL.createObjectURL(f)));
+    const all = Array.from(e.target.files);
+    const valid = all.filter((f) => f.type.startsWith('image/') && f.size <= MAX_PHOTO_SIZE);
+    if (valid.length < all.length) {
+      setError(`${all.length - valid.length}개 파일은 이미지가 아니거나 5MB를 초과해요.`);
+    }
+    const newFiles = [...photos, ...valid].slice(0, MAX_PHOTOS);
+    updatePhotos(newFiles);
+    e.target.value = '';
   }
 
   function removePhoto(idx) {
     const newFiles = photos.filter((_, i) => i !== idx);
-    setPhotos(newFiles);
-    setPhotoPreview(newFiles.map((f) => URL.createObjectURL(f)));
+    updatePhotos(newFiles);
   }
 
   async function handleSubmit() {

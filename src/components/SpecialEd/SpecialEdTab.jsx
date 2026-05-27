@@ -1,18 +1,24 @@
 import centersData from '../../data/specialed_centers.json';
 import styles from './SpecialEdTab.module.css';
 
-const NOTICES = [
+const LINKS = [
   {
-    id: 1,
-    title: '2026년 상반기 특수교육 보호자 연수 안내',
-    date: '2026-04-15',
-    desc: '부산 특수교육지원센터에서 보호자 역량 강화 연수를 진행합니다. 관심 있으신 보호자분들의 많은 참여 바랍니다.',
+    id: 'nise',
+    label: '국립특수교육원 (NISE)',
+    desc: '특수교육 정책·연구·자료, 에듀에이블 포함',
+    url: 'https://www.nise.go.kr',
   },
   {
-    id: 2,
-    title: '장애 학생 여름방학 통합놀이 프로그램 모집',
-    date: '2026-05-10',
-    desc: '비장애 학생과 함께하는 통합 놀이 프로그램입니다. 사전 신청 후 참여 가능합니다.',
+    id: 'eduable',
+    label: '에듀에이블',
+    desc: '장애학생 교육 자료·프로그램 온라인 제공',
+    url: 'https://www.nise.go.kr/main.do?s=eduable',
+  },
+  {
+    id: 'pen',
+    label: '부산시교육청 특수교육',
+    desc: '부산 특수교육 공지·정책 안내',
+    url: 'https://www.pen.go.kr',
   },
 ];
 
@@ -35,16 +41,22 @@ export default function SpecialEdTab({ onCenterOnMap }) {
         </section>
 
         <section className={styles.section}>
-          <p className={styles.sectionLabel}>행사·프로그램 안내</p>
-          <div className={styles.noticeList}>
-            {NOTICES.map((n) => (
-              <div key={n.id} className={styles.noticeCard}>
-                <div className={styles.noticeTop}>
-                  <span className={styles.noticeTitle}>{n.title}</span>
-                  <span className={styles.noticeDate}>{n.date}</span>
+          <p className={styles.sectionLabel}>관련 기관 바로가기</p>
+          <div className={styles.linkList}>
+            {LINKS.map((l) => (
+              <a
+                key={l.id}
+                href={l.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.linkCard}
+              >
+                <div className={styles.linkInfo}>
+                  <span className={styles.linkLabel}>{l.label}</span>
+                  <span className={styles.linkDesc}>{l.desc}</span>
                 </div>
-                <p className={styles.noticeDesc}>{n.desc}</p>
-              </div>
+                <span className={styles.linkArrow}>→</span>
+              </a>
             ))}
           </div>
         </section>

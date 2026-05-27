@@ -19,8 +19,13 @@
   margin-bottom: 12px;
 }
 .logo { font-size: 32px; }
+.logoImg { width: 48px; height: 48px; object-fit: contain; border-radius: 10px; }
 .appName { font-size: 18px; font-weight: 700; color: var(--color-primary); }
-.appSub  { font-size: 12px; color: var(--color-text-light); margin-top: 2px; }
+.appSub  { font-size: 13px; color: var(--color-text-light); margin-top: 2px; }
+
+.searchWrap {
+  position: relative;
+}
 
 .search {
   width: 100%;
@@ -32,6 +37,49 @@
   outline: none;
 }
 .search:focus { border-color: var(--color-primary); }
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 1.5px solid var(--color-primary);
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  z-index: 50;
+  overflow: hidden;
+}
+
+.dropdownItem {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
+  gap: 8px;
+  min-height: 44px;
+}
+.dropdownItem:last-child { border-bottom: none; }
+.dropdownItem:active { background: var(--color-bg); }
+
+.dropdownName {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text);
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.dropdownDistrict {
+  font-size: 12px;
+  color: var(--color-text-light);
+  flex-shrink: 0;
+}
 
 .body {
   overflow-y: auto;
@@ -79,13 +127,49 @@
   padding: 14px;
 }
 .cardTop {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   margin-bottom: 8px;
 }
-.pgName { font-size: 14px; font-weight: 700; }
-.cardDate { font-size: 11px; color: var(--color-text-light); }
+.pgRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.pgName {
+  font-size: 14px;
+  font-weight: 700;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.goBtn {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-primary);
+  background: var(--color-tag-bg);
+  border-radius: 12px;
+  padding: 4px 10px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  min-height: 28px;
+}
+.cardMeta2 {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.cardAuthor { font-size: 12px; color: var(--color-text-light); }
+.cardDisability {
+  font-size: 11px;
+  color: var(--color-secondary);
+  background: #E3F2FD;
+  border-radius: 8px;
+  padding: 1px 6px;
+}
+.cardDate { font-size: 11px; color: var(--color-text-light); margin-left: auto; }
 
 .cardTags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
 .cardTag {
@@ -97,8 +181,8 @@
   font-weight: 600;
 }
 
-.cardMeta { display: flex; flex-direction: column; gap: 4px; }
-.cardStar { font-size: 13px; color: #F57F17; letter-spacing: 1px; }
+.cardBottom { display: flex; flex-direction: column; gap: 4px; }
+.cardStar { font-size: 12px; color: #F57F17; letter-spacing: 1px; }
 .cardContent {
   font-size: 13px;
   color: var(--color-text);

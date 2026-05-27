@@ -1,8 +1,14 @@
 import { useState, useEffect } from 'react';
 import { collection, query, orderBy, limit, onSnapshot } from 'firebase/firestore';
 import { db } from '../../firebase/config';
-import { getTagIcon } from '../../utils/tagUtils';
+import { TAG_ICONS } from '../../utils/playgroundReviewUtils';
+import dummyData from '../../data/dummy_reviews_100.json';
 import styles from './HomeFeed.module.css';
+import logoImg from '../../assets/logo.png';
+
+const DUMMY_FEED = [...dummyData.reviews]
+  .sort((a, b) => b.date.localeCompare(a.date))
+  .slice(0, 10);
 
 const QUICK_FILTERS = [
   { tag: '휠체어편리', icon: '♿' },
@@ -13,10 +19,20 @@ const QUICK_FILTERS = [
   { tag: '바닥안전',   icon: '🐾' },
 ];
 
-export default function HomeFeed({ onQuickFilter, onGoMap }) {
+function getPlaygroundForReview(reviewId, playgrounds) {
+  if (!playgrounds?.length) return null;
+  const num = parseInt(String(reviewId).replace(/\D/g, '')) || 0;
+  return playgrounds[num % playgrounds.length];
+}
+
+export default function HomeFeed({ playgrounds, onQuickFilter, onGoMap, onGoToPlayground, onSelectPlayground }) {
   const [recentReviews, setRecentReviews] = useState([]);
   const [search, setSearch] = useState('');
-  const [loading, setLoading] = useState(true);
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  const searchResults = search.trim()
+    ? (playgrounds || []).filter((pg) => pg.name?.includes(search.trim())).slice(0, 8)
+    : [];
 
   useEffect(() => {
     const q = query(
@@ -26,8 +42,7 @@ export default function HomeFeed({ onQuickFilter, onGoMap }) {
     );
     const unsub = onSnapshot(q, (snap) => {
       setRecentReviews(snap.docs.map((d) => ({ id: d.id, ...d.data() })));
-      setLoading(false);
-    }, () => setLoading(false));
+    }, () => {});
     return unsub;
   }, []);
 
@@ -41,18 +56,40 @@ export default function HomeFeed({ onQuickFilter, onGoMap }) {
       {/* 헤더 */}
       <div className={styles.header}>
         <div className={styles.logoRow}>
-          <span className={styles.logo}>🌳</span>
+          <img src={logoImg} alt="로고" className={styles.logoImg} />
           <div>
-            <h1 className={styles.appName}>놀이터 접근성 지도</h1>
-            <p className={styles.appSub}>부산 장애아동 보호자 커뮤니티</p>
+            <h1 className={styles.appName}>놀잇터 - 놀이를 잇는 공간</h1>
+            <p className={styles.appSub}>부산 놀이터 접근성 지도</p>
           </div>
         </div>
-        <input
-          className={styles.search}
-          placeholder="🔍  놀이터 이름 검색"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
+        <div className={styles.searchWrap}>
+          <input
+            className={styles.search}
+            placeholder="🔍  놀이터 이름 검색"
+            value={search}
+            onChange={(e) => { setSearch(e.target.value); setShowDropdown(true); }}
+            onFocus={() => setShowDropdown(true)}
+            onBlur={() => setTimeout(() => setShowDropdown(false), 150)}
+          />
+          {showDropdown && searchResults.length > 0 && (
+            <div className={styles.dropdown}>
+              {searchResults.map((pg) => (
+                <button
+                  key={pg.id}
+                  className={styles.dropdownItem}
+                  onMouseDown={() => {
+                    onSelectPlayground?.(pg);
+                    setSearch('');
+                    setShowDropdown(false);
+                  }}
+                >
+                  <span className={styles.dropdownName}>{pg.name}</span>
+                  <span className={styles.dropdownDistrict}>{pg.district}</span>
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
 
       <div className={styles.body}>
@@ -76,16 +113,32 @@ export default function HomeFeed({ onQuickFilter, onGoMap }) {
         {/* 최근 후기 피드 */}
         <section className={styles.section}>
           <p className={styles.sectionLabel}>최근 후기</p>
-          {loading && <p className={styles.msg}>불러오는 중...</p>}
-          {!loading && recentReviews.length === 0 && (
-            <p className={styles.msg}>아직 후기가 없어요. 지도에서 놀이터를 찾아보세요!</p>
-          )}
           <div className={styles.feedList}>
-            {recentReviews
-              .filter((r) => !search || r.playgroundName?.includes(search))
-              .map((r) => (
-                <ReviewCard key={r.id} review={r} />
-              ))}
+            {(recentReviews.length > 0 ? recentReviews : DUMMY_FEED)
+              .filter((r) => {
+                if (!search) return true;
+                const pg = r.is_dummy ? getPlaygroundForReview(r.id, playgrounds) : null;
+                return r.playgroundName?.includes(search)
+                  || r.author?.includes(search)
+                  || pg?.name?.includes(search);
+              })
+              .map((r) => {
+                const pg = r.is_dummy
+                  ? getPlaygroundForReview(r.id, playgrounds)
+                  : (playgrounds?.find((p) => p.id === r.playgroundId)
+                     || playgrounds?.find((p) => p.name === r.playgroundName));
+                const goAction = pg
+                  ? () => onGoToPlayground(pg)
+                  : r.playgroundName ? () => onGoMap?.() : null;
+                return (
+                  <ReviewCard
+                    key={r.id}
+                    review={r}
+                    playground={pg}
+                    onGo={goAction}
+                  />
+                );
+              })}
           </div>
         </section>
       </div>
@@ -93,24 +146,39 @@ export default function HomeFeed({ onQuickFilter, onGoMap }) {
   );
 }
 
-function ReviewCard({ review }) {
+function ReviewCard({ review, playground, onGo }) {
   const dateStr = review.createdAt?.toDate
     ? review.createdAt.toDate().toLocaleDateString('ko-KR')
-    : '';
+    : review.date
+      ? new Date(review.date).toLocaleDateString('ko-KR')
+      : '';
+
+  const pgName = review.playgroundName || playground?.name;
 
   return (
     <div className={styles.card}>
       <div className={styles.cardTop}>
-        <span className={styles.pgName}>{review.playgroundName}</span>
-        <span className={styles.cardDate}>{dateStr}</span>
+        <div className={styles.pgRow}>
+          <span className={styles.pgName}>{pgName || review.author}</span>
+          {onGo && (
+            <button className={styles.goBtn} onClick={onGo}>지도 보기 →</button>
+          )}
+        </div>
+        <div className={styles.cardMeta2}>
+          <span className={styles.cardAuthor}>{review.author}</span>
+          {review.child_disability && (
+            <span className={styles.cardDisability}>{review.child_disability}</span>
+          )}
+          <span className={styles.cardDate}>{dateStr}</span>
+        </div>
       </div>
       <div className={styles.cardTags}>
         {review.tags?.slice(0, 3).map((t) => (
-          <span key={t} className={styles.cardTag}>{getTagIcon(t)} {t}</span>
+          <span key={t} className={styles.cardTag}>{TAG_ICONS[t]} {t}</span>
         ))}
       </div>
-      <div className={styles.cardMeta}>
-        <span className={styles.cardStar}>{'★'.repeat(review.rating)}</span>
+      <div className={styles.cardBottom}>
+        <span className={styles.cardStar}>{'★'.repeat(review.rating)}{'☆'.repeat(5 - review.rating)}</span>
         {review.content && (
           <p className={styles.cardContent}>{review.content}</p>
         )}

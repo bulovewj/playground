@@ -1,27 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
+import { collection, onSnapshot } from 'firebase/firestore';
+import { db } from '../../firebase/config';
 import styles from './AIChat.module.css';
-
-const SYSTEM_PROMPT = `당신은 장애 아동 보호자와 특수교사를 위한 부산 놀이터 추천 도우미입니다.
-따뜻하고 친절한 말투로 답변하세요.
-
-아래 데이터를 참고하여 조건에 맞는 놀이터를 추천해주세요.
-
-[놀이터 목록]
-{playgrounds_json}
-
-[태그별 후기 집계]
-{tag_summary_json}
-
-답변 규칙:
-- 추천은 최대 3개
-- 각 추천마다 선정 이유를 구체적으로 설명
-- 장애 유형이 언급되면 해당 유형에 맞는 태그 우선 고려
-  · 지체장애/휠체어 → 휠체어편리, 바닥안전
-  · 자폐성장애 → 조용함, 안전한울타리
-  · 시각장애 → 촉감놀이기구
-  · 지적장애 → 안전한울타리, 쉴공간있음
-- 확인되지 않은 정보는 "직접 확인이 필요해요"라고 답변
-- 놀이터 이름을 언급할 때는 정확한 이름 사용`;
+import logoImg from '../../assets/logo.png';
 
 const QUICK_QUESTIONS = [
   { icon: '♿', text: '휠체어 타는 아이랑 갈 수 있는 곳' },
@@ -33,12 +14,35 @@ export default function AIChat({ playgrounds }) {
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
-      text: '안녕하세요! 부산 놀이터 추천 도우미예요 🌳\n아이의 장애 유형이나 원하는 환경을 알려주시면 맞춤 놀이터를 찾아드릴게요.',
+      text: '안녕하세요! 부산 놀이터 추천 도우미예요 🌳\n현재 위치를 파악하면 가까운 놀이터를 우선 추천해 드릴게요.\n아이에 대해 몇 가지 여쭤볼게요!',
     },
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const [userLocation, setUserLocation] = useState(null);
+  const [locationStatus, setLocationStatus] = useState('pending');
+  const [tagSummaries, setTagSummaries] = useState({});
   const bottomRef = useRef(null);
+
+  useEffect(() => {
+    if (!navigator.geolocation) { setLocationStatus('denied'); return; }
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        setUserLocation({ lat: pos.coords.latitude, lng: pos.coords.longitude });
+        setLocationStatus('granted');
+      },
+      () => setLocationStatus('denied')
+    );
+  }, []);
+
+  useEffect(() => {
+    const unsub = onSnapshot(collection(db, 'tag_summary'), (snap) => {
+      const s = {};
+      snap.docs.forEach((d) => { s[d.id] = d.data(); });
+      setTagSummaries(s);
+    }, () => {});
+    return unsub;
+  }, []);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -52,35 +56,28 @@ export default function AIChat({ playgrounds }) {
     setLoading(true);
 
     try {
-      const pgSample = (playgrounds || []).slice(0, 30);
-      const systemPrompt = SYSTEM_PROMPT
-        .replace('{playgrounds_json}', JSON.stringify(pgSample))
-        .replace('{tag_summary_json}', '{}');
-
       const history = messages.map((m) => ({
         role: m.role === 'assistant' ? 'assistant' : 'user',
         content: m.text,
       }));
 
-      const res = await fetch('https://api.anthropic.com/v1/messages', {
+      const res = await fetch('/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'x-api-key': process.env.REACT_APP_CLAUDE_API_KEY,
-          'anthropic-version': '2023-06-01',
-          'anthropic-dangerous-direct-browser-access': 'true',
         },
         body: JSON.stringify({
-          model: 'claude-sonnet-4-20250514',
-          max_tokens: 1000,
-          system: systemPrompt,
-          messages: [...history, { role: 'user', content: userText }],
+          message: userText,
+          history,
+          playgrounds: (playgrounds || []).slice(0, 50),
+          userLocation,
+          tagSummaries,
         }),
       });
 
       if (!res.ok) throw new Error(`API error ${res.status}`);
       const data = await res.json();
-      const reply = data.content?.[0]?.text ?? '응답을 받지 못했어요.';
+      const reply = data.text ?? '응답을 받지 못했어요.';
       setMessages((prev) => [...prev, { role: 'assistant', text: reply }]);
     } catch {
       setMessages((prev) => [
@@ -100,6 +97,12 @@ export default function AIChat({ playgrounds }) {
           <p className={styles.headerTitle}>AI 놀이터 추천</p>
           <p className={styles.headerSub}>Claude AI가 맞춤 놀이터를 찾아드려요</p>
         </div>
+      </div>
+
+      {/* 위치 상태 */}
+      <div className={styles.locationBar}>
+        {locationStatus === 'granted' && <span className={styles.locationOn}>📍 현재 위치 기반 추천 활성화</span>}
+        {locationStatus === 'denied' && <span className={styles.locationOff}>📍 위치 권한 없음 — 전체 목록에서 추천</span>}
       </div>
 
       {/* 빠른 질문 */}
@@ -151,7 +154,7 @@ function Bubble({ message }) {
   const isUser = message.role === 'user';
   return (
     <div className={`${styles.bubbleRow} ${isUser ? styles.bubbleRowUser : ''}`}>
-      {!isUser && <span className={styles.avatar}>🌳</span>}
+      {!isUser && <img src={logoImg} alt="로고" className={styles.avatar} />}
       <div className={`${styles.bubble} ${isUser ? styles.bubbleUser : styles.bubbleAI} ${message.isError ? styles.bubbleError : ''}`}>
         {message.text.split('\n').map((line, i) => (
           <span key={i}>{line}{i < message.text.split('\n').length - 1 && <br />}</span>
@@ -164,7 +167,7 @@ function Bubble({ message }) {
 function ThinkingBubble() {
   return (
     <div className={styles.bubbleRow}>
-      <span className={styles.avatar}>🌳</span>
+      <img src={logoImg} alt="로고" className={styles.avatar} />
       <div className={`${styles.bubble} ${styles.bubbleAI}`}>
         <span className={styles.dot} />
         <span className={styles.dot} />

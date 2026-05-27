@@ -1,23 +1,20 @@
 import { useState } from 'react';
 import styles from './PlaygroundDetail.module.css';
 import { useReviews } from '../../hooks/useReviews';
-import { getTagIcon, getTopTags } from '../../utils/tagUtils';
 import ReviewList from '../Review/ReviewList';
-import dummyReviews from '../../data/dummy_reviews.json';
-
-const DUMMY_ID = dummyReviews.playground.id;
+import dummyData from '../../data/dummy_reviews_100.json';
+import { getReviewsForPlayground, getTagSummary, TAG_ICONS } from '../../utils/playgroundReviewUtils';
 
 export default function PlaygroundDetail({ playground, onClose, onWriteReview }) {
-  const [tab, setTab] = useState('info'); // 'info' | 'reviews'
-  const { reviews, tagSummary, loading } = useReviews(playground?.id);
+  const [tab, setTab] = useState('info');
+  const { reviews: firebaseReviews, loading } = useReviews(playground?.id);
 
   if (!playground) return null;
 
-  // Firebase 후기 우선, 없으면 더미데이터 fallback
-  const activeSummary = tagSummary ?? (playground.id === DUMMY_ID ? dummyReviews.tag_summary : null);
-  const totalReviews = tagSummary?.total_reviews ?? (playground.id === DUMMY_ID ? dummyReviews.total_reviews : 0);
-  const avgRating = tagSummary?.average_rating ?? (playground.id === DUMMY_ID ? dummyReviews.average_rating : null);
-  const topTags = getTopTags(activeSummary, 3);
+  const dummyReviews = getReviewsForPlayground(playground.id, dummyData.reviews);
+  const displayReviews = [...firebaseReviews, ...dummyReviews];
+
+  const { topTags, averageRating, totalReviews } = getTagSummary(displayReviews);
 
   const naverUrl = `https://map.naver.com/v5/search/${encodeURIComponent(playground.address || playground.name)}`;
 
@@ -63,13 +60,32 @@ export default function PlaygroundDetail({ playground, onClose, onWriteReview })
                 <Chip>{playground.type}</Chip>
                 <Chip>{playground.public_private}</Chip>
                 {playground.fee && <Chip>{playground.fee}</Chip>}
+                {playground.place_type && <Chip variant="light">{playground.place_type}</Chip>}
               </div>
 
               <div className={styles.infoGrid}>
                 <InfoItem label="설치 기구" value={playground.equipment_count > 0 ? `${playground.equipment_count}개` : '정보 없음'} />
                 <InfoItem label="휠체어 기구" value={playground.wheelchair_equipment ? '✅ 있음' : '없음'} />
-                <InfoItem label="안전교육" value={playground.safety_training ? '✅ 완료' : '미완료'} />
+                <InfoItem label="안전교육" value={
+                  playground.safety_training
+                    ? playground.safety_training_expiry
+                      ? `✅ ${playground.safety_training_expiry.slice(0, 7)} 까지`
+                      : '✅ 완료'
+                    : '미완료'
+                } />
+                <InfoItem label="놀이터 면적" value={playground.area ? `${playground.area.toLocaleString()}㎡` : '정보 없음'} />
               </div>
+
+              {playground.equipment_types?.length > 0 && (
+                <div className={styles.equipSection}>
+                  <p className={styles.sectionLabel}>설치 기구 종류</p>
+                  <div className={styles.equipRow}>
+                    {playground.equipment_types.map((t) => (
+                      <span key={t} className={styles.equipTag}>{t}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               <div className={styles.facilityRow}>
                 <FacilityBadge icon="🚗" label="주차장" active={playground.has_parking} />
@@ -82,15 +98,15 @@ export default function PlaygroundDetail({ playground, onClose, onWriteReview })
                 <p className={styles.sectionLabel}>
                   보호자 강점 태그
                   {totalReviews > 0 && <span className={styles.reviewCount}> ({totalReviews}개 후기)</span>}
-                  {avgRating && (
-                    <span className={styles.avgRating}> · ★ {avgRating.toFixed(1)}</span>
+                  {averageRating > 0 && (
+                    <span className={styles.avgRating}> · ★ {averageRating.toFixed(1)}</span>
                   )}
                 </p>
                 {topTags.length > 0 ? (
                   <div className={styles.tagRow}>
-                    {topTags.map(([tag, count]) => (
+                    {topTags.map(({ tag, count }) => (
                       <div key={tag} className={styles.tagItem}>
-                        <span className={styles.tagIcon}>{getTagIcon(tag)}</span>
+                        <span className={styles.tagIcon}>{TAG_ICONS[tag]}</span>
                         <span className={styles.tagLabel}>{tag}</span>
                         <span className={styles.tagCount}>{count}</span>
                       </div>
@@ -103,8 +119,8 @@ export default function PlaygroundDetail({ playground, onClose, onWriteReview })
             </>
           ) : (
             <ReviewList
-              reviews={reviews?.length ? reviews : (playground.id === DUMMY_ID ? dummyReviews.reviews : [])}
-              loading={loading}
+              reviews={displayReviews}
+              loading={loading && displayReviews.length === 0}
             />
           )}
         </div>
@@ -119,8 +135,8 @@ export default function PlaygroundDetail({ playground, onClose, onWriteReview })
   );
 }
 
-function Chip({ children }) {
-  return <span className={styles.chip}>{children}</span>;
+function Chip({ children, variant }) {
+  return <span className={`${styles.chip} ${variant === 'light' ? styles.chipLight : ''}`}>{children}</span>;
 }
 
 function InfoItem({ label, value }) {

@@ -6,9 +6,11 @@ import {
 } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { db, storage } from '../firebase/config';
+import { TAGS } from '../utils/tagUtils';
 
 const REVIEWS_COL = 'reviews';
 const TAG_SUMMARY_COL = 'tag_summary';
+const MAX_PHOTO_SIZE = 5 * 1024 * 1024; // 5MB
 
 export function useReviews(playgroundId) {
   const [reviews, setReviews] = useState([]);
@@ -41,9 +43,8 @@ export function useReviews(playgroundId) {
 
     const unsubSummary = onSnapshot(
       doc(db, TAG_SUMMARY_COL, playgroundId),
-      (snap) => {
-        if (snap.exists()) setTagSummary(snap.data());
-      }
+      (snap) => { if (snap.exists()) setTagSummary(snap.data()); },
+      (err) => setError(err)
     );
 
     return () => {
@@ -55,6 +56,7 @@ export function useReviews(playgroundId) {
   async function submitReview(playgroundId, playgroundName, formData, photoFiles) {
     const photoUrls = await uploadPhotos(playgroundId, photoFiles);
 
+    // reviewDoc is built from explicit fields only — never carries is_dummy or other dummy data
     const reviewDoc = {
       playgroundId,
       playgroundName,
@@ -67,48 +69,53 @@ export function useReviews(playgroundId) {
       createdAt: serverTimestamp(),
     };
 
-    try {
-      await addDoc(collection(db, REVIEWS_COL), reviewDoc);
+    await addDoc(collection(db, REVIEWS_COL), reviewDoc);
 
-      // tag_summary 원자적 업데이트
-      const summaryRef = doc(db, TAG_SUMMARY_COL, playgroundId);
-      await runTransaction(db, async (tx) => {
-        const snap = await tx.get(summaryRef);
-        if (!snap.exists()) {
-          const initial = {
-            휠체어편리: 0, 조용함: 0, 촉감놀이기구: 0, 쉴공간있음: 0,
-            청결함: 0, 안전한울타리: 0, 물놀이가능: 0, 바닥안전: 0,
-            total_reviews: 0, average_rating: formData.rating, updatedAt: serverTimestamp(),
-          };
-          formData.tags.forEach((t) => { initial[t] = 1; });
-          tx.set(summaryRef, initial);
-        } else {
-          const updates = { total_reviews: increment(1), updatedAt: serverTimestamp() };
-          formData.tags.forEach((t) => { updates[t] = increment(1); });
-          // 평점 재계산은 서버에서 하기 어려우니 근사치
-          const prev = snap.data();
-          const newAvg =
-            (prev.average_rating * prev.total_reviews + formData.rating) /
-            (prev.total_reviews + 1);
-          updates.average_rating = Math.round(newAvg * 10) / 10;
-          tx.update(summaryRef, updates);
-        }
-      });
-    } catch (err) {
-      throw err;
-    }
+    // 태그 집계 원자적 업데이트
+    const summaryRef = doc(db, TAG_SUMMARY_COL, playgroundId);
+    await runTransaction(db, async (tx) => {
+      const snap = await tx.get(summaryRef);
+      if (!snap.exists()) {
+        const initial = TAGS.reduce((acc, t) => { acc[t.id] = 0; return acc; }, {});
+        formData.tags.forEach((t) => { initial[t] = 1; });
+        tx.set(summaryRef, {
+          ...initial,
+          total_reviews: 1,
+          average_rating: formData.rating,
+          updatedAt: serverTimestamp(),
+        });
+      } else {
+        const prev = snap.data();
+        const updates = { total_reviews: increment(1), updatedAt: serverTimestamp() };
+        formData.tags.forEach((t) => { updates[t] = increment(1); });
+        // average_rating: (prev_sum + new) / (prev_count + 1)
+        updates.average_rating = Math.round(
+          ((prev.average_rating * prev.total_reviews + formData.rating) / (prev.total_reviews + 1)) * 10
+        ) / 10;
+        tx.update(summaryRef, updates);
+      }
+    });
   }
 
   async function uploadPhotos(playgroundId, files) {
     if (!files || files.length === 0) return [];
-    const urls = await Promise.all(
-      files.map(async (file) => {
-        const storageRef = ref(storage, `reviews/${playgroundId}/${Date.now()}_${file.name}`);
+
+    const validFiles = files.filter(
+      (f) => f.type.startsWith('image/') && f.size <= MAX_PHOTO_SIZE
+    );
+
+    const results = await Promise.allSettled(
+      validFiles.map(async (file, index) => {
+        const safeName = file.name.replace(/[^\w.-]/g, '_');
+        const storageRef = ref(storage, `reviews/${playgroundId}/${Date.now()}_${index}_${safeName}`);
         await uploadBytes(storageRef, file);
         return getDownloadURL(storageRef);
       })
     );
-    return urls;
+
+    return results
+      .filter((r) => r.status === 'fulfilled')
+      .map((r) => r.value);
   }
 
   return { reviews, tagSummary, loading, error, submitReview };

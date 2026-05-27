@@ -114,10 +114,15 @@
   font-size: 13px;
   background: var(--color-tag-bg);
 }
+.chipLight {
+  background: #fff;
+  color: var(--color-text-light);
+  border-color: var(--color-border);
+}
 
 .infoGrid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 8px;
   margin-bottom: 16px;
 }
@@ -161,6 +166,21 @@
 .facilityInactive {
   background: var(--color-bg);
   color: var(--color-border);
+}
+
+.equipSection { margin-bottom: 16px; }
+.equipRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.equipTag {
+  padding: 4px 10px;
+  border-radius: 12px;
+  background: #E8F5E9;
+  color: #2E7D32;
+  font-size: 12px;
+  font-weight: 600;
 }
 
 .strengthSection { margin-bottom: 16px; }

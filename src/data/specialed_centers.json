@@ -16,7 +16,7 @@
       "district": "남구",
       "address": "부산광역시 남구 못골로 29",
       "phone": "051-640-0248",
-      "website": "https://nambu.pen.go.kr",
+      "website": "https://home.pen.go.kr/nambu/",
       "latitude": 35.1356,
       "longitude": 129.0876
     },
@@ -26,7 +26,7 @@
       "district": "동래구",
       "address": "부산광역시 동래구 충렬사로67번길 56",
       "phone": "051-935-4289",
-      "website": "https://dongnae.pen.go.kr",
+      "website": "https://home.pen.go.kr/dongnae/",
       "latitude": 35.2009,
       "longitude": 129.0836
     },
@@ -36,7 +36,7 @@
       "district": "북구",
       "address": "부산광역시 북구 백양대로1016번다길 44",
       "phone": "051-330-1266",
-      "website": "https://bukbu.pen.go.kr",
+      "website": "https://home.pen.go.kr/bukbu/",
       "latitude": 35.2371,
       "longitude": 128.9987
     },
@@ -46,7 +46,7 @@
       "district": "서구",
       "address": "부산광역시 서구 꽃마을로 33",
       "phone": "051-250-0428",
-      "website": "https://seobu.pen.go.kr",
+      "website": "https://home.pen.go.kr/seobu/",
       "latitude": 35.0979,
       "longitude": 129.0226
     },
@@ -56,7 +56,7 @@
       "district": "해운대구",
       "address": "부산광역시 해운대구 세실로 137",
       "phone": "051-709-0476",
-      "website": "https://haeundae.pen.go.kr",
+      "website": "https://home.pen.go.kr/haeundae/",
       "latitude": 35.1631,
       "longitude": 129.1639
     }

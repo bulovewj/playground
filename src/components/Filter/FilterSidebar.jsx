@@ -1,37 +1,24 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { TAGS, PLACE_TYPES, DISTRICTS, EMPTY_FILTERS } from '../../utils/tagUtils';
 import styles from './FilterSidebar.module.css';
 
-const TAGS = [
-  { id: '휠체어편리', icon: '♿' },
-  { id: '조용함', icon: '🌿' },
-  { id: '촉감놀이기구', icon: '🖐' },
-  { id: '쉴공간있음', icon: '☀️' },
-  { id: '청결함', icon: '🧹' },
-  { id: '안전한울타리', icon: '🔒' },
-  { id: '물놀이가능', icon: '🌊' },
-  { id: '바닥안전', icon: '🐾' },
-];
-
 const FACILITIES = [
-  { id: '주차장', icon: '🚗' },
-  { id: '화장실', icon: '🚻' },
-  { id: '응급병원', icon: '🏥' },
-  { id: '경찰서', icon: '🚔' },
+  { id: '주차장', label: '🚗 주차장 (시설 내)' },
+  { id: '화장실', label: '🚻 화장실 (시설 내)' },
+  { id: '응급병원', label: '🏥 응급병원 (1km)' },
+  { id: '경찰서', label: '🚔 경찰서 (1km)' },
 ];
-
-const DISTRICTS = [
-  '중구','서구','동구','영도구','부산진구','동래구','남구','북구',
-  '해운대구','사하구','금정구','강서구','연제구','수영구','사상구','기장군',
-];
-
-const EMPTY_FILTERS = { types: [], ownership: [], tags: [], facilities: [], districts: [] };
 
 export default function FilterSidebar({ isOpen, onClose, filters, onApply }) {
   const [draft, setDraft] = useState(filters ?? EMPTY_FILTERS);
 
+  useEffect(() => {
+    if (isOpen) setDraft(filters ?? EMPTY_FILTERS);
+  }, [filters, isOpen]);
+
   function toggle(key, value) {
     setDraft((prev) => {
-      const arr = prev[key];
+      const arr = prev[key] ?? [];
       return {
         ...prev,
         [key]: arr.includes(value) ? arr.filter((v) => v !== value) : [...arr, value],
@@ -39,14 +26,8 @@ export default function FilterSidebar({ isOpen, onClose, filters, onApply }) {
     });
   }
 
-  function reset() {
-    setDraft(EMPTY_FILTERS);
-  }
-
-  function apply() {
-    onApply(draft);
-    onClose();
-  }
+  function reset() { setDraft(EMPTY_FILTERS); }
+  function apply() { onApply(draft); onClose(); }
 
   const activeCount = Object.values(draft).flat().length;
 
@@ -78,6 +59,14 @@ export default function FilterSidebar({ isOpen, onClose, filters, onApply }) {
             />
           </Section>
 
+          <Section label="설치장소">
+            <ChipGroup
+              options={PLACE_TYPES.map((p) => ({ id: p.id, label: `${p.icon} ${p.id}` }))}
+              selected={draft.placeTypes}
+              onToggle={(v) => toggle('placeTypes', v)}
+            />
+          </Section>
+
           <Section label="강점 태그 (후기 기반)">
             <ChipGroup
               options={TAGS.map((t) => ({ id: t.id, label: `${t.icon} ${t.id}` }))}
@@ -88,7 +77,7 @@ export default function FilterSidebar({ isOpen, onClose, filters, onApply }) {
 
           <Section label="편의시설">
             <ChipGroup
-              options={FACILITIES.map((f) => ({ id: f.id, label: `${f.icon} ${f.id}` }))}
+              options={FACILITIES.map((f) => ({ id: f.id, label: f.label }))}
               selected={draft.facilities}
               onToggle={(v) => toggle('facilities', v)}
             />
@@ -122,7 +111,7 @@ function Section({ label, children }) {
   );
 }
 
-function ChipGroup({ options, selected, onToggle }) {
+function ChipGroup({ options, selected = [], onToggle }) {
   return (
     <div className={styles.chipGroup}>
       {options.map((opt) => (

@@ -82,7 +82,7 @@
   border: 1.5px solid var(--color-border);
   font-size: 13px;
   background: #fff;
-  min-height: 36px;
+  min-height: 44px;
 }
 .chipActive { background: var(--color-primary); border-color: var(--color-primary); color: #fff; }
 
